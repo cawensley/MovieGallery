@@ -6,3 +6,11 @@ $headings-font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe U
 $headings-font-weight: 700 !default;
 
 @import "bootstrap/scss/bootstrap.scss";
+
+html {padding: env(safe-area-inset);}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to left, rgba(7,27,82,1) 0%, rgba(0,128,128,1) 100%); /* w3c */
+}
