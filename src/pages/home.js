@@ -17,7 +17,7 @@ class Home extends Component {
     onButtonSubmit = () => {
         this.setState({isLoading: true});
         localStorage.setItem(`searchString`,this.state.input);
-        fetch(`http://www.omdbapi.com/?s=${this.state.input}&apikey=${movieAPI}`)
+        fetch(`https://www.omdbapi.com/?s=${this.state.input}&apikey=${movieAPI}`)
             .then(response=> {
                 if (response.ok) {return response.json();}
                 else {throw new Error(`Error with API call`);}})
@@ -65,7 +65,7 @@ class Home extends Component {
                 <button type="submit" value="Submit" className="btn btn-primary btn-sm"
                         onClick={this.onButtonSubmit}>Title Search</button>
                 <br/>
-                <h2 className="text-white">http://www.omdbapi.com/?s={localStorage.getItem(`searchString`)}&apikey={movieAPI}</h2>
+                <h2 className="text-white">https://www.omdbapi.com/?s={localStorage.getItem(`searchString`)}&apikey={movieAPI}</h2>
                 <h2 className="text-warning">No Searches Matching: {localStorage.getItem(`searchString`)}</h2>
             </div>
             ) : (
@@ -76,7 +76,7 @@ class Home extends Component {
                 <button type="submit" value="Submit" className="btn btn-primary btn-sm"
                         onClick={this.onButtonSubmit}>Title Search</button>
                 <br/>
-                <h2 className="text-white">http://www.omdbapi.com/?s={localStorage.getItem(`searchString`)}&apikey={movieAPI}</h2>
+                <h2 className="text-white">https://www.omdbapi.com/?s={localStorage.getItem(`searchString`)}&apikey={movieAPI}</h2>
                 <h2 className="text-warning">Total Search Results: {moviestoDisplay.totalResults}</h2>
                 <h2 className="text-warning">Total Searches Displayed: {moviestoDisplay.Search.length}</h2>
                 <h2 className="text-warning">Searched Phrase: {localStorage.getItem(`searchString`)}</h2>
