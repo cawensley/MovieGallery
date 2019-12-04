@@ -8,6 +8,7 @@ const MainNavBar=()=> {
                 <div className="ml-auto">
                     <Link to="/" className="navbar-brand px-3 py-1">Home</Link>
                     <Link to="/favorites" className="navbar-brand px-3 py-1">Favorites</Link>
+                    <Link to="/details" className="navbar-brand px-3 py-1">Details</Link>
                 </div>
             </nav>
     )

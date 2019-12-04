@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import CardList from "../atoms/cardlist";
-
-const movieAPI = "bf0372ee";
+import movieAPI from "../atoms/movieAPI";
 
 class Home extends Component {
     constructor() {
@@ -27,12 +26,9 @@ class Home extends Component {
 
     componentDidMount() {
         this.setState({isLoading: true});
-        console.log("Before Input is:",this.state.input);
-        console.log("Stored Searchstring is:",localStorage.getItem(`searchString`));
         if (localStorage.getItem('searchString')) {
             this.setState({input: localStorage.getItem('searchString')})}
         if (this.state.input) {this.onButtonSubmit()}
-        console.log("After Input is:",this.state.input);
         this.setState({isLoading: false});
     };
 

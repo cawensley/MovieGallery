@@ -1,18 +1,21 @@
 import React from 'react';
 import './card.css';
+import {Link} from "react-router-dom";
 
 const Card = ({Title,Year,id,Type,Poster}) => {
+
     return (
-        <div className='card m-card-width d-inline-flex m-1 text-center bg-primary'>
+        <Link to="/details" onClick={()=>localStorage.setItem(`movieID`,`${id}`)}
+              className='card a-card-width a-card-hover d-inline-flex m-2 text-center bg-dark text-white'>
             <img className="card-img-top" alt='Error Loading' src={`${Poster}`} height={400} />
             <div>
                 <h2>{Title}</h2>
-                <p className="text-white">Year: {Year}</p>
-                <p className="text-white">Imdb ID = {id}</p>
-                <p className="text-white">Type: {Type}</p>
+                <p>Year: {Year}</p>
+                <p>Imdb ID: {id}</p>
+                <p>Type: {Type}</p>
             </div>
-        </div>
+        </Link>
     );
-}
+};
 
 export default Card;

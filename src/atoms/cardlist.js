@@ -2,7 +2,6 @@ import React from 'react';
 import Card from './card';
 
 const CardList = ({ movies }) => {
-    console.log("Cardlist = ",movies);
     return (
         <div>
             {
