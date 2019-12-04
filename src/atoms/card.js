@@ -1,13 +1,15 @@
 import React from 'react';
 import './card.css';
 
-const Card = ({ name, email, id }) => {
+const Card = ({Title,Year,id,Type,Poster}) => {
     return (
         <div className='card m-card-width d-inline-flex m-1 text-center bg-primary'>
-            <img alt='Error Loading' src={`https://robohash.org/${id}?size=200x200`} />
+            <img className="card-img-top" alt='Error Loading' src={`${Poster}`} height={400} />
             <div>
-                <h2>{name}</h2>
-                <p>{email}</p>
+                <h2>{Title}</h2>
+                <p className="text-white">Year: {Year}</p>
+                <p className="text-white">Imdb ID = {id}</p>
+                <p className="text-white">Type: {Type}</p>
             </div>
         </div>
     );

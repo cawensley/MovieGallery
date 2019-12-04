@@ -3,14 +3,13 @@ import React from "react";
 
 const MainNavBar=()=> {
     return (
-        <div className="container-fluid">
-            <nav className="bg-dark navbar navbar-expand fixed-top">
+            <nav className="bg-dark navbar navbar-expand o-mainnavbar_padding fixed-top p-1">
+                <h2 className="">(Insert Icon Here)</h2>
                 <div className="ml-auto">
-                    <Link to="/" className="text-light navbar-brand px-3 py-1">Home</Link>
-                    <Link to="/favorites" className="text-light navbar-brand px-3 py-1">Favorites</Link>
+                    <Link to="/" className="navbar-brand px-3 py-1">Home</Link>
+                    <Link to="/favorites" className="navbar-brand px-3 py-1">Favorites</Link>
                 </div>
             </nav>
-        </div>
     )
 };
 

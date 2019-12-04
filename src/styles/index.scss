@@ -23,3 +23,20 @@ body {
   left: 0;
   z-index: -1;
 }
+
+.p-padding {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+  min-height: 92rem;
+}
+
+.o-mainnavbar_padding {
+  padding-top: 0rem;
+  padding-bottom: 0rem;
+}
+
+.navbar-brand {
+  color: white;
+  &:hover {color: $primary;}
+  &:focus {color: $warning;}
+}
