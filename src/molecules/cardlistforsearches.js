@@ -1,13 +1,13 @@
 import React from 'react';
-import Card from './card';
+import Cardforsearches from '../atoms/cardforsearches';
 
-const CardList = ({ movies }) => {
+const Cardlistforsearches = ({ movies }) => {
     return (
         <div>
             {
                 movies.map((user, i) => {
                     return (
-                        <Card
+                        <Cardforsearches
                             key={i}
                             Title={movies[i].Title}
                             Year={movies[i].Year}
@@ -22,4 +22,4 @@ const CardList = ({ movies }) => {
     );
 };
 
-export default CardList;
+export default Cardlistforsearches;

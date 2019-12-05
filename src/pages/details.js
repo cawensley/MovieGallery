@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import movieAPI from "../atoms/movieAPI";
+import PageTitle from "../atoms/pageTitle";
 
 class Details extends Component {
     constructor() {
@@ -23,6 +24,12 @@ class Details extends Component {
             .catch(error => this.setState({error,isLoading: false}));
     };
 
+    onButtonAdd = () => {
+        var FavMovieArray = JSON.parse(localStorage.getItem("favoriteArray"));
+        FavMovieArray.push(localStorage.getItem(`movieID`));
+        localStorage.setItem("favoriteArray",JSON.stringify(FavMovieArray));
+    };
+
     render() {
         const { movietoDisplay,isLoading,error} = this.state;
 
@@ -40,7 +47,10 @@ class Details extends Component {
             </div>
         ) : (
             <div className="container-fluid p-padding text-center">
+                <PageTitle Title={'Movie Details'}/>
                 <img alt='Error Loading' src={movietoDisplay.Poster} height={400} />
+                <button type="submit" value="Submit" className="btn btn-primary m-4"
+                        onClick={this.onButtonAdd}>Add to Favorites</button>
                 <div className="row justify-content-center align-content-center">
                     <table className="table table-striped table-bordered text-white my-4 col-md-10 col-lg-6">
                         <tbody>

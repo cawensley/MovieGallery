@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import CardList from "../atoms/cardlist";
+import Cardlistforsearches from "../molecules/cardlistforsearches";
 import movieAPI from "../atoms/movieAPI";
+import PageTitle from "../atoms/pageTitle";
 
 class Home extends Component {
     constructor() {
@@ -55,7 +56,7 @@ class Home extends Component {
 
         return (!moviestoDisplay || moviestoDisplay.Response === "False") ? (
             <div className="p-padding text-center">
-                <h1 className="text-white">Movie Gallery Website</h1>
+                <PageTitle Title={'Search Movies'}/>
                 <input type="text" size="15" className="h6" onChange={this.onInputChange}
                        onKeyPress={this.keyPressed}/>
                 <button type="submit" value="Submit" className="btn btn-primary btn-sm"
@@ -66,7 +67,7 @@ class Home extends Component {
             </div>
             ) : (
             <div className="p-padding text-center">
-                <h1 className="text-white">Movie Gallery Website</h1>
+                <PageTitle Title={'Search Movies'}/>
                 <input type="text" size="15" className="h6" onChange={this.onInputChange}
                        onKeyPress={this.keyPressed}/>
                 <button type="submit" value="Submit" className="btn btn-primary btn-sm"
@@ -77,7 +78,7 @@ class Home extends Component {
                 <h2 className="text-warning">Total Searches Displayed: {moviestoDisplay.Search.length}</h2>
                 <h2 className="text-warning">Searched Phrase: {localStorage.getItem(`searchString`)}</h2>
                 <br/>
-                <CardList movies={moviestoDisplay.Search}/>
+                <Cardlistforsearches movies={moviestoDisplay.Search}/>
             </div>
         )
     }

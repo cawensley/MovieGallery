@@ -2,7 +2,7 @@ import React from 'react';
 import './card.css';
 import {Link} from "react-router-dom";
 
-const Card = ({Title,Year,id,Type,Poster}) => {
+const Cardforsearches = ({Title,Year,id,Type,Poster}) => {
 
     return (
         <Link to="/details" onClick={()=>localStorage.setItem(`movieID`,`${id}`)}
@@ -18,4 +18,4 @@ const Card = ({Title,Year,id,Type,Poster}) => {
     );
 };
 
-export default Card;
+export default Cardforsearches;
