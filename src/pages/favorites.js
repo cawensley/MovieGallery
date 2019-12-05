@@ -4,9 +4,15 @@ import PageTitle from "../atoms/pageTitle";
 
 function Favorites() {
 
-    var FavMovieArray = JSON.parse(localStorage.getItem("favoriteArray"));
+    if (localStorage.getItem("favoriteArray")) {
+        var FavMovieArray = JSON.parse(localStorage.getItem("favoriteArray"))}
 
-    return (
+    return (!FavMovieArray) ? (
+        <div className="p-padding text-center">
+            <PageTitle Title={'Your Favorite Movies!'}/>
+            <h2 className="text-warning">No Favorites Stored</h2>
+        </div>
+    ) : (
         <div className="container-fluid p-padding text-center text-light">
             <PageTitle Title={'Your Favorite Movies!'}/>
 

@@ -9,7 +9,7 @@ class Details extends Component {
             isLoading: false,
             error: null,
             input: null,
-            movietoDisplay: null,
+            movietoDisplay: '',
         }
     }
 
@@ -25,13 +25,16 @@ class Details extends Component {
     };
 
     onButtonAdd = () => {
-        var FavMovieArray = JSON.parse(localStorage.getItem("favoriteArray"));
+        var FavMovieArray = [];
+        if (localStorage.getItem("favoriteArray")) {
+            FavMovieArray = JSON.parse(localStorage.getItem("favoriteArray"))}
         FavMovieArray.push(localStorage.getItem(`movieID`));
         localStorage.setItem("favoriteArray",JSON.stringify(FavMovieArray));
     };
 
     render() {
-        const { movietoDisplay,isLoading,error} = this.state;
+        const {movietoDisplay,isLoading,error} = this.state;
+        console.log(movietoDisplay);
 
         if (error) {return (
             <div className="text-center text-white p-padding">
@@ -41,9 +44,10 @@ class Details extends Component {
         if (isLoading) {return (<p className="text-center text-white p-padding">
             <i className="fas fa-5x fa-cog fa-spin"></i></p>)};
 
-        return (!movietoDisplay) ? (
+        return (!localStorage.getItem(`movieID`)) ? (
             <div className="p-padding text-center">
-                <h1 className="text-white">No Movie to Display</h1>
+                <PageTitle Title={'Movie Details'}/>
+                <h2 className="text-warning">No Movie to Display</h2>
             </div>
         ) : (
             <div className="container-fluid p-padding text-center">
