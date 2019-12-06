@@ -4,7 +4,7 @@ import movieAPI from "../atoms/movieAPI";
 import PageTitle from "../atoms/pageTitle";
 
 const Home = () => {
-    const [moviestoDisplay, setmoviestoDisplay] = useState();
+    const [moviestoDisplay, setmoviestoDisplay] = useState("");
     const [userInput,setUserInput]=useState(localStorage.getItem(`searchString`));
 
     async function getmovieData() {
@@ -15,7 +15,7 @@ const Home = () => {
     }
 
     //eslint-disable-next-line
-    useEffect (()=> {getmovieData()},[]);
+    useEffect (()=> {if (userInput!==null) {getmovieData()}},[]);
 
     return (!moviestoDisplay || moviestoDisplay.Response === "False") ? (
         <div className="p-padding text-center">

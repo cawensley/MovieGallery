@@ -5,9 +5,11 @@ const AddRemoveButton = ({ id }) => {
     var isFavMovie = false;
     if (localStorage.getItem("favoriteArray")) {
         var FavMovieArray = JSON.parse(localStorage.getItem("favoriteArray"))};
+
+    if (FavMovieArray) {
     for (var i=0;i<FavMovieArray.length;i++) {
         if (id===FavMovieArray[i]) {isFavMovie=true;}
-    }
+    }}
 
     function onMovieAdd () {
         var MovieArray = [];
@@ -19,11 +21,10 @@ const AddRemoveButton = ({ id }) => {
     }
 
     function onMovieRemove () {
-        var FavMovieArray = JSON.parse(localStorage.getItem("favoriteArray"));
-        for (var i=0;i<FavMovieArray.length;i++) {
-            if (id===FavMovieArray[i]) {FavMovieArray.splice(i,1)}
-        }
-        localStorage.setItem("favoriteArray",JSON.stringify(FavMovieArray));
+        var MovieArray = JSON.parse(localStorage.getItem("favoriteArray"));
+        for (var i=0;i<MovieArray.length;i++) {
+            if (id===MovieArray[i]) {MovieArray.splice(i,1)}}
+        localStorage.setItem("favoriteArray",JSON.stringify(MovieArray));
         window.location.reload(true)
     }
 
