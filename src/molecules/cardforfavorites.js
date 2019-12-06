@@ -23,7 +23,7 @@ const Cardforfavorites = ({id}) => {
     ) : (
         <div className="d-inline-flex card a-card-width a-card-hover m-2 text-center bg-dark text-white">
             <Link to="/details" onClick={()=>localStorage.setItem(`movieID`,`${id}`)}>
-                <img className="card-img-top" alt='Error Loading' src={movietoDisplay.Poster} height={400} />
+                <img className="card-img-top" alt='Error Loading' src={movietoDisplay.Poster}/>
                 <h2 className="text-warning">{movietoDisplay.Title}</h2>
                 <p className="text-light">Year: {movietoDisplay.Year}</p>
                 <p className="text-light">Type: {movietoDisplay.Type}</p>
