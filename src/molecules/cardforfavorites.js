@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './card.css';
 import {Link} from "react-router-dom";
 import movieAPI from "../atoms/movieAPI";
+import AddRemoveButton from "./AddRemoveButton";
 
 const Cardforfavorites = ({id}) => {
     const [movietoDisplay, setmovietoDisplay] = useState(null);
@@ -12,15 +13,6 @@ const Cardforfavorites = ({id}) => {
         setmovietoDisplay(rawData);
     }
 
-    function onMovieRemove () {
-        var FavMovieArray = JSON.parse(localStorage.getItem("favoriteArray"));
-        for (var i=0;i<FavMovieArray.length;i++) {
-            if (id===FavMovieArray[i]) {FavMovieArray.splice(i,1)}
-        }
-        localStorage.setItem("favoriteArray",JSON.stringify(FavMovieArray));
-        window.location.reload(true)
-    }
-
     //eslint-disable-next-line
     useEffect (()=> {getmovieData()},[]);
 
@@ -29,18 +21,16 @@ const Cardforfavorites = ({id}) => {
             <h2 className="text-warning">No Movie to Display</h2>
         </div>
     ) : (
-        <Link to="/details" onClick={()=>localStorage.setItem(`movieID`,`${id}`)}
-              className='card a-card-width a-card-hover d-inline-flex m-2 text-center bg-dark text-white'>
-            <img className="card-img-top" alt='Error Loading' src={movietoDisplay.Poster} height={400} />
-            <div>
-                <h2 className="text-warning">Title: {movietoDisplay.Title}</h2>
+        <div className="d-inline-flex card a-card-width a-card-hover m-2 text-center bg-dark text-white">
+            <Link to="/details" onClick={()=>localStorage.setItem(`movieID`,`${id}`)}>
+                <img className="card-img-top" alt='Error Loading' src={movietoDisplay.Poster} height={400} />
+                <h2 className="text-warning">{movietoDisplay.Title}</h2>
                 <p>Year: {movietoDisplay.Year}</p>
                 <p>Imdb ID: {movietoDisplay.imdbID}</p>
                 <p>Type: {movietoDisplay.Type}</p>
-                <button type="submit" value="Submit" className="btn btn-primary m-4"
-                        onClick={()=>onMovieRemove()}>Remove From Favorites</button>
-            </div>
-        </Link>
+            </Link>
+            <AddRemoveButton id={movietoDisplay.imdbID}/>
+        </div>
     );
 };
 
