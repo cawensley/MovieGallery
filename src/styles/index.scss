@@ -40,3 +40,14 @@ body {
   &:hover {color: $primary;}
   &:focus {color: $warning;}
 }
+
+.hyperLink {
+  color: #00b9ff;
+  background-color: transparent;
+  text-decoration-line: underline;
+  font-style: italic;
+  text-decoration:
+  &:hover {
+    color: $primary;
+  }
+}

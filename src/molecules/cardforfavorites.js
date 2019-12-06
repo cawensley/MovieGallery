@@ -25,10 +25,10 @@ const Cardforfavorites = ({id}) => {
             <Link to="/details" onClick={()=>localStorage.setItem(`movieID`,`${id}`)}>
                 <img className="card-img-top" alt='Error Loading' src={movietoDisplay.Poster} height={400} />
                 <h2 className="text-warning">{movietoDisplay.Title}</h2>
-                <p>Year: {movietoDisplay.Year}</p>
-                <p>Imdb ID: {movietoDisplay.imdbID}</p>
-                <p>Type: {movietoDisplay.Type}</p>
+                <p className="text-light">Year: {movietoDisplay.Year}</p>
+                <p className="text-light">Type: {movietoDisplay.Type}</p>
             </Link>
+            <a href={`https://www.imdb.com/title/${movietoDisplay.imdbID}/`} className="hyperLink">Imdb ID: {movietoDisplay.imdbID}</a>
             <AddRemoveButton id={movietoDisplay.imdbID}/>
         </div>
     );

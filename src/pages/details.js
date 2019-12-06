@@ -67,7 +67,7 @@ const Details = () => {
                     </tr>
                     <tr className="h6">
                         <td>imdb ID:</td>
-                        <td>{movietoDisplay.imdbID}</td>
+                        <td><a href={`https://www.imdb.com/title/${movietoDisplay.imdbID}/`} className="hyperLink">{movietoDisplay.imdbID}</a></td>
                     </tr>
                     <tr className="h6">
                         <td>imdb Rating:</td>
