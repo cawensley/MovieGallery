@@ -1,21 +1,15 @@
-import React,{useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './card.css';
 import {Link} from "react-router-dom";
-import movieAPI from "./movieAPI";
+import movieAPI from "../atoms/movieAPI";
 
 const Cardforfavorites = ({id}) => {
-    const [Title,setTitle] = useState();
-    const [Year,setYear] = useState();
-    const [Type,setType] = useState();
-    const [Poster,setPoster] = useState();
+    const [movietoDisplay, setmovietoDisplay] = useState(null);
 
     async function getmovieData () {
         const rawData = await fetch(`https://www.omdbapi.com/?i=${id}&apikey=${movieAPI}`)
             .then(response => response.json());
-        setTitle(rawData.Title);
-        setYear(rawData.Year);
-        setType(rawData.Type);
-        setPoster(rawData.Poster);
+        setmovietoDisplay(rawData);
     }
 
     function onMovieRemove () {
@@ -27,17 +21,22 @@ const Cardforfavorites = ({id}) => {
         window.location.reload(true)
     }
 
-    getmovieData();
+    //eslint-disable-next-line
+    useEffect (()=> {getmovieData()},[]);
 
-    return (
+    return (!movietoDisplay) ? (
+        <div className="p-padding text-center">
+            <h2 className="text-warning">No Movie to Display</h2>
+        </div>
+    ) : (
         <Link to="/details" onClick={()=>localStorage.setItem(`movieID`,`${id}`)}
               className='card a-card-width a-card-hover d-inline-flex m-2 text-center bg-dark text-white'>
-            <img className="card-img-top" alt='Error Loading' src={`${Poster}`} height={400} />
+            <img className="card-img-top" alt='Error Loading' src={movietoDisplay.Poster} height={400} />
             <div>
-                <h2 className="text-warning">Title: {Title}</h2>
-                <p>Year: {Year}</p>
-                <p>Imdb ID: {id}</p>
-                <p>Type: {Type}</p>
+                <h2 className="text-warning">Title: {movietoDisplay.Title}</h2>
+                <p>Year: {movietoDisplay.Year}</p>
+                <p>Imdb ID: {movietoDisplay.imdbID}</p>
+                <p>Type: {movietoDisplay.Type}</p>
                 <button type="submit" value="Submit" className="btn btn-primary m-4"
                         onClick={()=>onMovieRemove()}>Remove From Favorites</button>
             </div>

@@ -8,8 +8,8 @@ import Footer from "./organisms/footer";
 import Particles from 'react-particles-js';
 import particleOptions from "./atoms/particleOptions";
 
-function App () {
-        return (
+const App = () => {
+    return (
             <Router>
                 <Particles className='particles' params={particleOptions}/>
                 <MainNavBar/>
@@ -20,7 +20,7 @@ function App () {
                 </Switch>
                 <Footer/>
             </Router>
-        )
-}
+    )
+};
 
 export default App;

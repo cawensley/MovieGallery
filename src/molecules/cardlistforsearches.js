@@ -1,5 +1,5 @@
 import React from 'react';
-import Cardforsearches from '../atoms/cardforsearches';
+import Cardforsearches from './cardforsearches';
 
 const Cardlistforsearches = ({ movies }) => {
     return (

@@ -1,8 +1,8 @@
 import React from 'react';
-import Cardforfavorites from '../atoms/cardforfavorites';
+import Cardforfavorites from '../molecules/cardforfavorites';
 import PageTitle from "../atoms/pageTitle";
 
-function Favorites() {
+const Favorites = () => {
 
     if (localStorage.getItem("favoriteArray")) {
         var FavMovieArray = JSON.parse(localStorage.getItem("favoriteArray"))}
