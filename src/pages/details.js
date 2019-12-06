@@ -14,7 +14,7 @@ const Details = () => {
     }
 
     //eslint-disable-next-line
-    useEffect (()=> {getmovieData()},[]);
+    useEffect (()=> {getmovieData(); window.scrollTo(0,0)},[]);
 
     return (!movietoDisplay || !localStorage.getItem('movieID')) ? (
         <div className="p-padding text-center">

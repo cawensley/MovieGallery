@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Cardforfavorites from '../molecules/cardforfavorites';
 import PageTitle from "../atoms/pageTitle";
 
@@ -6,6 +6,9 @@ const Favorites = () => {
 
     if (localStorage.getItem("favoriteArray")) {
         var FavMovieArray = JSON.parse(localStorage.getItem("favoriteArray"))}
+
+    //eslint-disable-next-line
+    useEffect (()=> {window.scrollTo(0,0)},[]);
 
     return (!FavMovieArray) ? (
         <div className="p-padding text-center">

@@ -15,7 +15,7 @@ const Home = () => {
     }
 
     //eslint-disable-next-line
-    useEffect (()=> {if (userInput!==null) {getmovieData()}},[]);
+    useEffect (()=> {if (userInput!==null) {getmovieData()} window.scrollTo(0,0)},[]);
 
     return (!moviestoDisplay || moviestoDisplay.Response === "False") ? (
         <div className="p-padding text-center">
