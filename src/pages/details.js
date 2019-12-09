@@ -22,15 +22,15 @@ const Details = () => {
             <h2 className="text-warning">No Movie to Display</h2>
         </div>
     ) : (
-        <div className="container-fluid p-padding text-center">
+        <div className="container-fluid p-padding text-center ">
             <PageTitle Title={'Movie Details'}/>
-            <img alt='Error Loading' src={movietoDisplay.Poster} height={400}/><br/>
+            <img alt='Error Loading' src={movietoDisplay.Poster}/><br/>
             <AddRemoveButton id={movietoDisplay.imdbID}/>
             <div className="row justify-content-center ">
                 <table className="table table-striped table-bordered text-white my-4 col-md-10 col-lg-6 bg-secondary">
                     <tbody>
                     <tr className="h5 text-warning">
-                        <td>Title:</td>
+                        <td className="align-middle">Title:</td>
                         <td>{movietoDisplay.Title}</td>
                     </tr>
                     <tr className="h6">
@@ -54,27 +54,27 @@ const Details = () => {
                         <td>{movietoDisplay.Genre}</td>
                     </tr>
                     <tr className="h6">
-                        <td>Director(s):</td>
+                        <td className="align-middle">Director(s):</td>
                         <td>{movietoDisplay.Director}</td>
                     </tr>
                     <tr className="h6">
-                        <td>Writer(s):</td>
+                        <td className="align-middle">Writer(s):</td>
                         <td>{movietoDisplay.Writer}</td>
                     </tr>
                     <tr className="h6">
-                        <td>Actor(s):</td>
+                        <td className="align-middle">Actor(s):</td>
                         <td>{movietoDisplay.Actors}</td>
                     </tr>
                     <tr className="h6">
                         <td>imdb ID:</td>
                         <td><a href={`https://www.imdb.com/title/${movietoDisplay.imdbID}/`} className="hyperLink">{movietoDisplay.imdbID}</a></td>
-                    </tr>
+                    </tr >
                     <tr className="h6">
                         <td>imdb Rating:</td>
-                        <td>{movietoDisplay.imdbRating}</td>
+                        <td className="align-middle">{movietoDisplay.imdbRating}</td>
                     </tr>
                     <tr className="h6">
-                        <td>Plot:</td>
+                        <td className="align-middle">Plot:</td>
                         <td>{movietoDisplay.Plot}</td>
                     </tr>
                     </tbody>

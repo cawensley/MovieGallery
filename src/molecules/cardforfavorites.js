@@ -21,14 +21,16 @@ const Cardforfavorites = ({id}) => {
             <h2 className="text-warning">No Movie to Display</h2>
         </div>
     ) : (
-        <div className="d-inline-flex card a-card-width a-card-hover m-2 text-center bg-dark text-white">
+        <div className="card d-inline-flex m-card-width m-card-hover m-2 bg-dark">
             <Link to="/details" onClick={()=>localStorage.setItem(`movieID`,`${id}`)}>
                 <img className="card-img-top" alt='Error Loading' src={movietoDisplay.Poster}/>
-                <h2 className="text-warning">{movietoDisplay.Title}</h2>
-                <p className="text-light">Year: {movietoDisplay.Year}</p>
-                <p className="text-light">Type: {movietoDisplay.Type}</p>
+                <div className="card-body">
+                    <h2 className="card-title text-warning">{movietoDisplay.Title}</h2>
+                    <p className="card-text text-white">Year: {movietoDisplay.Year}</p>
+                    <p className="card-text text-white">Type: {movietoDisplay.Type}</p>
+                </div>
             </Link>
-            <a href={`https://www.imdb.com/title/${movietoDisplay.imdbID}/`} className="hyperLink">Imdb ID: {movietoDisplay.imdbID}</a>
+            <a href={`https://www.imdb.com/title/${movietoDisplay.imdbID}/`} className="card-link hyperLink">Imdb ID: {movietoDisplay.imdbID}</a>
             <AddRemoveButton id={movietoDisplay.imdbID}/>
         </div>
     );

@@ -18,7 +18,6 @@ const Favorites = () => {
     ) : (
         <div className="container-fluid p-padding text-center">
             <PageTitle Title={'Your Favorite Movies!'}/>
-
             <div>{FavMovieArray.map((user, i) => {
                 return (
                     <Cardforfavorites key={i} id={FavMovieArray[i]}/>

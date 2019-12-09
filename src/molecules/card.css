@@ -1,8 +1,8 @@
-.a-card-width {
+.m-card-width {
     width: 20rem;
 }
 
-.a-card-hover:hover {
+.m-card-hover:hover {
     cursor: pointer;
     transform: scale(1.05);
     z-index: 1;
