@@ -17,7 +17,7 @@ const Details = () => {
     useEffect (()=> {getmovieData(); window.scrollTo(0,0)},[]);
 
     return (!movietoDisplay || !localStorage.getItem('movieID')) ? (
-        <div className="p-padding text-center">
+        <div className="container-fluid p-padding text-center">
             <PageTitle Title={'Movie Details'}/>
             <h2 className="text-warning">No Movie to Display</h2>
         </div>

@@ -11,12 +11,12 @@ const Favorites = () => {
     useEffect (()=> {window.scrollTo(0,0)},[]);
 
     return (!FavMovieArray) ? (
-        <div className="p-padding text-center">
+        <div className="container-fluid p-padding text-center">
             <PageTitle Title={'Your Favorite Movies!'}/>
             <h2 className="text-warning">No Favorites Stored</h2>
         </div>
     ) : (
-        <div className="container-fluid p-padding text-center text-light">
+        <div className="container-fluid p-padding text-center">
             <PageTitle Title={'Your Favorite Movies!'}/>
 
             <div>{FavMovieArray.map((user, i) => {

@@ -23,7 +23,7 @@ const Home = () => {
     useEffect (()=> {if (userInput!==null) {getmovieData()} window.scrollTo(0,0)},[PageSelected]);
 
     return (!moviestoDisplay || moviestoDisplay.Response === "False") ? (
-        <div className="p-padding text-center">
+        <div className="container-fluid p-padding text-center">
             <PageTitle Title={'Search Movies'}/>
             <input type="text" size="15" className="h6" onChange={event=>setUserInput(event.target.value)}
                    onKeyPress={event=>{if (event.key === "Enter") {getmovieData()}}}/>
@@ -33,31 +33,33 @@ const Home = () => {
             <h2 className="text-warning">No Searches Matching: {localStorage.getItem(`searchString`)}</h2>
         </div>
     ) : (
-        <div className="p-padding text-center">
+        <div className="container-fluid p-padding text-center">
             <div className="row">
-                <div className="col-6 text-right">
+                <div className="col-xl-3"></div>
+                <div className="col-xl-3 col-md-6">
                     <PageTitle Title={'Search Movies'}/>
                     <input type="text" size="15" className="h6" onChange={event=>setUserInput(event.target.value)}
                            onKeyPress={event=>{if (event.key === "Enter") {getmovieData()}}}/>
                     <button type="submit" value="Submit" className="btn btn-primary btn-sm"
                                 onClick={()=>{setPageSelected(1);getmovieData()}}>Title Search</button>
                 </div>
-                <div className="col-6 text-left">
+                <div className="col-xl-3 col-md-6 text-md-left">
                     <p className="text-warning">Total Search Results: {moviestoDisplay.totalResults}</p>
                     <p className="text-warning">Total Pages: {Math.trunc(moviestoDisplay.totalResults/ResultsSelected)+1}</p>
-                    <label className="text-warning"> Results per Page:
-                        <select className="ml-2" value={ResultsSelected} onChange={event => setResultsSelected(event.target.value)}>
+                    <label className="text-warning">Results per Page:
+                        <select className="ml-1" value={ResultsSelected} onChange={event => setResultsSelected(event.target.value)}>
                             {ResultsDisplayed.map(item=>(<option key={item} value={item}>{item}</option>))}
                         </select>
                     </label>
                     <br/>
-                    <label className="text-warning"> Page Selector:
-                        <select className="ml-2" value={PageSelected} onChange={event => setPageSelected(event.target.value)}>
+                    <label className="text-warning"> Page:
+                        <select className="ml-1" value={PageSelected} onChange={event => setPageSelected(event.target.value)}>
                             {PageChoices.map(item=>(<option key={item} value={item}>{item}</option>))}
                         </select>
                     </label>
-                    <p className="text-warning">Searched Phrase: {localStorage.getItem(`searchString`)}</p>
+                    <p className="text-warning">Searches Matching: "{localStorage.getItem(`searchString`)}"</p>
                 </div>
+                <div className="col-xl-3"></div>
             </div>
             <Cardlistforsearches movies={moviestoDisplay.Search}/>
         </div>
