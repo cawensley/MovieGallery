@@ -7,9 +7,9 @@ const Home = () => {
     const [moviestoDisplay, setmoviestoDisplay] = useState("");
     const [userInput,setUserInput]=useState(localStorage.getItem(`searchString`));
     const [PageSelected,setPageSelected]=useState(localStorage.getItem('PageSelected'));
-    const PageChoices=[1,2,3,4,5];
+    const [PageArray,setPageArray]=useState([1,2,3]);
     const [ResultsSelected,setResultsSelected]=useState(10);
-    const ResultsDisplayed=[10];
+    const ResultsArray=[10];
 
     async function getmovieData() {
         localStorage.setItem(`searchString`,userInput);
@@ -17,6 +17,10 @@ const Home = () => {
         const rawData = await fetch(`https://www.omdbapi.com/?s=${userInput}&page=${PageSelected}&apikey=${movieAPI}`)
             .then(response => response.json());
         setmoviestoDisplay(rawData);
+        const TotalPages = Math.trunc(rawData.totalResults/ResultsSelected)+1;
+        let TotalPagesArray = [];
+        for (var i=1;i<=TotalPages;i++) {TotalPagesArray.push(i)}
+        setPageArray(TotalPagesArray);
     }
 
     //eslint-disable-next-line
@@ -45,16 +49,16 @@ const Home = () => {
                 </div>
                 <div className="col-xl-3 col-md-6 text-md-left">
                     <p className="text-warning">Total Search Results: {moviestoDisplay.totalResults}</p>
-                    <p className="text-warning">Total Pages: {Math.trunc(moviestoDisplay.totalResults/ResultsSelected)+1}</p>
+                    <p className="text-warning">Total Pages: {PageArray.length}</p>
                     <label className="text-warning">Results per Page:
                         <select className="ml-1" value={ResultsSelected} onChange={event => setResultsSelected(event.target.value)}>
-                            {ResultsDisplayed.map(item=>(<option key={item} value={item}>{item}</option>))}
+                            {ResultsArray.map(item=>(<option key={item} value={item}>{item}</option>))}
                         </select>
                     </label>
                     <br/>
                     <label className="text-warning"> Page:
                         <select className="ml-1" value={PageSelected} onChange={event => setPageSelected(event.target.value)}>
-                            {PageChoices.map(item=>(<option key={item} value={item}>{item}</option>))}
+                            {PageArray.map(item=>(<option key={item} value={item}>{item}</option>))}
                         </select>
                     </label>
                     <p className="text-warning">Searches Matching: "{localStorage.getItem(`searchString`)}"</p>
