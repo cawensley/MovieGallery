@@ -30,15 +30,9 @@ body {
   min-height: 92rem;
 }
 
-.o-mainnavbar_padding {
-  padding-top: 0rem;
-  padding-bottom: 0rem;
-}
-
-.navbar-brand {
-  color: white;
-  &:hover {color: $primary;}
-  &:focus {color: $warning;}
+.nav-link {color: $white;
+  &:hover {color: $primary}
+  &:focus {color: $warning}
 }
 
 .hyperLink {
