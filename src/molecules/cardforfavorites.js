@@ -21,7 +21,7 @@ const Cardforfavorites = ({id}) => {
             <h2 className="text-warning">No Movie to Display</h2>
         </div>
     ) : (
-        <div className="card d-inline-flex m-card-width m-card-hover m-2 bg-dark">
+        <div className="card d-inline-flex m-card-width m-card-hover m-1 bg-dark">
             <Link to="/details" onClick={()=>localStorage.setItem(`movieID`,`${id}`)}>
                 <img className="card-img-top" alt='Error Loading' src={movietoDisplay.Poster}/>
                 <div className="card-body">

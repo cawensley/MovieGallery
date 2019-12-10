@@ -1,5 +1,6 @@
 .m-card-width {
     width: 20rem;
+    max-width: 47%;
 }
 
 .m-card-hover:hover {
