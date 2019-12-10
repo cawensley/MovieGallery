@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import Cardlistforsearches from "../molecules/cardlistforsearches";
+import Cardlist from "../molecules/cardlist";
 import movieAPI from "../atoms/movieAPI";
 import PageTitle from "../atoms/pageTitle";
 
@@ -78,7 +78,7 @@ const Home = () => {
                 </div>
                 <div className="col-xl-3"></div>
             </div>
-            <Cardlistforsearches movies={moviestoDisplay}/>
+            <Cardlist movies={moviestoDisplay}/>
         </div>
     )
 };

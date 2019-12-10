@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import Cardforfavorites from '../molecules/cardforfavorites';
 import PageTitle from "../atoms/pageTitle";
+import Cardlist from "../molecules/cardlist";
 
 const Favorites = () => {
 
@@ -18,11 +18,7 @@ const Favorites = () => {
     ) : (
         <div className="container-fluid p-padding text-center">
             <PageTitle Title={'Your Favorite Movies!'}/>
-            <div>{FavMovieArray.map((user, i) => {
-                return (
-                    <Cardforfavorites key={i} id={FavMovieArray[i]}/>
-                )})}
-            </div>
+            <Cardlist movies={FavMovieArray}/>
         </div>
     );
 }
