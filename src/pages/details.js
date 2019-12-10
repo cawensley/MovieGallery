@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import movieAPI from "../atoms/movieAPI";
 import PageTitle from "../atoms/pageTitle";
 import AddRemoveButton from "../molecules/AddRemoveButton";
+import "./details.css";
 
 const Details = () => {
     const [movietoDisplay, setmovietoDisplay] = useState(null);
@@ -24,7 +25,7 @@ const Details = () => {
     ) : (
         <div className="container-fluid p-padding text-center ">
             <PageTitle Title={'Movie Details'}/>
-            <img alt='Error Loading' src={movietoDisplay.Poster}/><br/>
+            <img className="p-movieimage-height p-movieimage-width bg-dark" alt='Error Loading' src={movietoDisplay.Poster}/><br/>
             <AddRemoveButton id={movietoDisplay.imdbID}/>
             <div className="row justify-content-center ">
                 <table className="table table-striped table-bordered text-white my-4 col-md-10 col-lg-6 bg-secondary">
