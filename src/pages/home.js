@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect,useRef} from 'react';
 import Cardlist from "../molecules/cardlist";
 import movieAPI from "../atoms/movieAPI";
 import PageTitle from "../atoms/pageTitle";
@@ -15,6 +15,8 @@ const Home = () => {
     const [TotalResults,setTotalResults]=useState();
     const [FetchSuccess,setFetchSuccess]=useState(false);
     const [isLoading,setisLoading]=useState(false);
+    const filterTerm=useRef("");
+    const [filteredMovies,setfilteredMovies]=useState([]);
 
     async function getmovieData() {
         setisLoading(true);
@@ -44,11 +46,21 @@ const Home = () => {
                 .then(response => response.json());
             for (var d=0;d<MovieGrouping.Search.length;d++) {TotalMoviestoDisplay.push(MovieGrouping.Search[d])}}
         setmoviestoDisplay(TotalMoviestoDisplay);
+        filterTerm.current = "";
+        setfilteredMovies(TotalMoviestoDisplay);
         setisLoading(false);
     }
 
     //eslint-disable-next-line
     useEffect (()=> {if (userInput!==null) {getmovieData()} window.scrollTo(0,0)},[PageSelected,ResultsSelected]);
+
+    function onFilterChange (event) {
+        filterTerm.current = event.toLowerCase();
+        const FilteredMovieArray = moviestoDisplay.filter(movie=>{
+            return movie.Title.toLowerCase().includes(filterTerm.current);});
+        setfilteredMovies(FilteredMovieArray);
+    }
+
 
     if (isLoading) {return(<PageLoading/>)}
 
@@ -68,10 +80,12 @@ const Home = () => {
                 <div className="col-xl-3"></div>
                 <div className="col-xl-3 col-md-6">
                     <PageTitle Title={'Search Movies'}/>
-                    <input type="text" size="15" className="h6" onChange={event=>setUserInput(event.target.value)}
+                    <input type="text" placeholder="Enter a movie title" className="h6" onChange={event=>setUserInput(event.target.value)}
                            onKeyPress={event=>{if (event.key === "Enter") {setPageSelected(1);getmovieData()}}}/>
                     <button type="submit" value="Submit" className="btn btn-primary btn-sm"
                                 onClick={()=>{setPageSelected(1);getmovieData()}}>Title Search</button>
+                    <h5 className="text-white mt-2" >Filter Results By:</h5>
+                    <input type="search" placeholder="Enter filter term" className="h6" onChange={event=>onFilterChange(event.target.value)}/>
                 </div>
                 <div className="col-xl-3 col-md-6 text-md-left">
                     <p className="text-warning">Total Search Results: {TotalResults}</p>
@@ -93,7 +107,7 @@ const Home = () => {
                 </div>
                 <div className="col-xl-3"></div>
             </div>
-            <Cardlist movies={moviestoDisplay}/>
+            <Cardlist movies={filteredMovies}/>
         </div>
     )
 };
