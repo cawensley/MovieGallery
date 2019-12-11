@@ -27,8 +27,7 @@ const Home = () => {
         setPageArray(TotalPagesArray);
 
         let PagestoFetch = [];
-        const TotalFetches = Math.trunc(rawData.totalResults/10)+1;
-
+        const TotalFetches = Math.ceil(rawData.totalResults/10);
         for (var z=(PageSelected-1)*(ResultsSelected/10)+1;z<=PageSelected*ResultsSelected/10;z++) {
             if (z<=TotalFetches) {PagestoFetch.push(z)}}
 
