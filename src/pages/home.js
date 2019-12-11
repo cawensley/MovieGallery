@@ -12,6 +12,7 @@ const Home = () => {
     const [ResultsSelected,setResultsSelected]=useState(localStorage.getItem('ResultsSelected') || 10);
     const ResultsArray=[10,20,50];
     const [TotalResults,setTotalResults]=useState();
+    const [FetchSuccess,setFetchSuccess]=useState(false);
 
     async function getmovieData() {
         localStorage.setItem(`searchString`,userInput);
@@ -20,6 +21,9 @@ const Home = () => {
         const rawData = await fetch(`https://www.omdbapi.com/?s=${userInput}&apikey=${movieAPI}`)
             .then(response => response.json());
         setTotalResults(rawData.totalResults);
+
+        var wasFetchSuccess = (rawData.Response === "True");
+        setFetchSuccess(wasFetchSuccess);
 
         const TotalPages = Math.ceil(rawData.totalResults/ResultsSelected);
         let TotalPagesArray = [];
@@ -42,7 +46,7 @@ const Home = () => {
     //eslint-disable-next-line
     useEffect (()=> {if (userInput!==null) {getmovieData()} window.scrollTo(0,0)},[PageSelected,ResultsSelected]);
 
-    return (!moviestoDisplay) ? (
+    return (!moviestoDisplay || !FetchSuccess) ? (
         <div className="container-fluid p-padding text-center">
             <PageTitle Title={'Search Movies'}/>
             <input type="text" size="15" className="h6" onChange={event=>setUserInput(event.target.value)}
