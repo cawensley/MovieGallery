@@ -3,6 +3,7 @@ import Cardlist from "../molecules/cardlist";
 import movieAPI from "../atoms/movieAPI";
 import PageTitle from "../atoms/pageTitle";
 import ShowResults from "../atoms/ShowResults";
+import PageLoading from "../atoms/pageLoading";
 
 const Home = () => {
     const [moviestoDisplay, setmoviestoDisplay] = useState("");
@@ -13,8 +14,10 @@ const Home = () => {
     const ResultsArray=[10,20,50];
     const [TotalResults,setTotalResults]=useState();
     const [FetchSuccess,setFetchSuccess]=useState(false);
+    const [isLoading,setisLoading]=useState(false);
 
     async function getmovieData() {
+        setisLoading(true);
         localStorage.setItem(`searchString`,userInput);
         localStorage.setItem('PageSelected',PageSelected);
         localStorage.setItem('ResultsSelected',ResultsSelected);
@@ -41,10 +44,13 @@ const Home = () => {
                 .then(response => response.json());
             for (var d=0;d<MovieGrouping.Search.length;d++) {TotalMoviestoDisplay.push(MovieGrouping.Search[d])}}
         setmoviestoDisplay(TotalMoviestoDisplay);
+        setisLoading(false);
     }
 
     //eslint-disable-next-line
     useEffect (()=> {if (userInput!==null) {getmovieData()} window.scrollTo(0,0)},[PageSelected,ResultsSelected]);
+
+    if (isLoading) {return(<PageLoading/>)}
 
     return (!moviestoDisplay || !FetchSuccess) ? (
         <div className="container-fluid p-padding text-center">

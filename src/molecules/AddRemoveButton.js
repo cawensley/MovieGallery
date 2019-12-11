@@ -1,7 +1,9 @@
-import React from 'react';
+import React,{useState} from 'react';
 import movieAPI from "../atoms/movieAPI";
+import PageLoading from "../atoms/pageLoading";
 
 const AddRemoveButton = ({ id }) => {
+    const [isLoading,setisLoading]=useState(false);
 
     var isFavMovie = false;
     if (localStorage.getItem("favoriteArray")) {
@@ -13,6 +15,7 @@ const AddRemoveButton = ({ id }) => {
     }}
 
     function onMovieAdd () {
+        setisLoading(true);
         var MovieArray = [];
         if (localStorage.getItem("favoriteArray")) {
             MovieArray = JSON.parse(localStorage.getItem("favoriteArray"))}
@@ -28,6 +31,7 @@ const AddRemoveButton = ({ id }) => {
             };
             MovieArray.push(MovietoAdd);
             localStorage.setItem("favoriteArray",JSON.stringify(MovieArray));
+            setisLoading(false);
             window.location.reload(true);
         }
         addMovietoArray();
@@ -40,6 +44,8 @@ const AddRemoveButton = ({ id }) => {
         localStorage.setItem("favoriteArray",JSON.stringify(MovieArray));
         window.location.reload(true);
     }
+
+    if (isLoading) {return(<PageLoading/>)}
 
     return (!isFavMovie) ? (
             <button type="submit" value="Submit" className="btn btn-success m-4"

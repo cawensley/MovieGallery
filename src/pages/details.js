@@ -3,19 +3,25 @@ import movieAPI from "../atoms/movieAPI";
 import PageTitle from "../atoms/pageTitle";
 import AddRemoveButton from "../molecules/AddRemoveButton";
 import "./details.css";
+import PageLoading from "../atoms/pageLoading";
 
 const Details = () => {
     const [movietoDisplay, setmovietoDisplay] = useState(null);
+    const [isLoading,setisLoading]=useState(false);
 
     async function getmovieData() {
+        setisLoading(true);
         const displaymovieID = localStorage.getItem('movieID');
         const rawData = await fetch(`https://www.omdbapi.com/?i=${displaymovieID}&apikey=${movieAPI}`)
             .then(response => response.json());
         setmovietoDisplay(rawData);
+        setisLoading(false);
     }
 
     //eslint-disable-next-line
     useEffect (()=> {getmovieData(); window.scrollTo(0,0)},[]);
+
+    if (isLoading) {return(<PageLoading/>)}
 
     return (!movietoDisplay || !localStorage.getItem('movieID')) ? (
         <div className="container-fluid p-padding text-center">
