@@ -21,7 +21,7 @@ const Home = () => {
             .then(response => response.json());
         setTotalResults(rawData.totalResults);
 
-        const TotalPages = Math.trunc(rawData.totalResults/ResultsSelected)+1;
+        const TotalPages = Math.ceil(rawData.totalResults/ResultsSelected);
         let TotalPagesArray = [];
         for (var i=1;i<=TotalPages;i++) {TotalPagesArray.push(i)}
         setPageArray(TotalPagesArray);
