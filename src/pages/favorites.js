@@ -12,15 +12,15 @@ const Favorites = () => {
 
     return (!FavMovieArray) ? (
         <div className="container-fluid p-padding text-center">
-            <PageTitle Title={'Your Favorite Movies!'}/>
+            <PageTitle Title={'Favorite Movies'}/>
             <h2 className="text-warning">No Favorites Stored</h2>
         </div>
     ) : (
         <div className="container-fluid p-padding text-center">
-            <PageTitle Title={'Your Favorite Movies!'}/>
+            <PageTitle Title={'Favorite Movies'}/>
             <Cardlist movies={FavMovieArray}/>
         </div>
     );
-}
+};
 
 export default Favorites;

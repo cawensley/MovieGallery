@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import movieAPI from "../atoms/movieAPI";
 import PageTitle from "../atoms/pageTitle";
 import AddRemoveButton from "../molecules/AddRemoveButton";
-import "./details.css";
+import "./details.scss";
 import PageLoading from "../atoms/pageLoading";
 
 const Details = () => {
@@ -74,7 +74,8 @@ const Details = () => {
                     </tr>
                     <tr className="h6">
                         <td>imdb ID:</td>
-                        <td><a href={`https://www.imdb.com/title/${movietoDisplay.imdbID}/`} className="hyperLink">{movietoDisplay.imdbID}</a></td>
+                        <td><a href={`https://www.imdb.com/title/${movietoDisplay.imdbID}/`} className="p-hyperLink-color"
+                               rel="noopener noreferrer" target="_blank">{movietoDisplay.imdbID}</a></td>
                     </tr >
                     <tr className="h6">
                         <td>imdb Rating:</td>

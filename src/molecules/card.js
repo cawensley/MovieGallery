@@ -1,5 +1,5 @@
 import React from 'react';
-import './card.css';
+import './card.scss';
 import {Link} from "react-router-dom";
 import AddRemoveButton from "./AddRemoveButton";
 
@@ -15,7 +15,8 @@ const Card = ({Title,Year,id,Type,Poster}) => {
                     <p className="card-text text-light">Type: {Type}</p>
                 </div>
             </Link>
-            <a href={`https://www.imdb.com/title/${id}/`} className="card-link hyperLink">Imdb ID: {id}</a>
+            <a href={`https://www.imdb.com/title/${id}/`} rel="noopener noreferrer" target="_blank"
+               className="m-cardhyperLink-color">Imdb ID: {id}</a>
             <AddRemoveButton id={id}/>
         </div>
     );

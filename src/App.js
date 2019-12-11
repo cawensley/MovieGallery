@@ -11,7 +11,7 @@ import particleOptions from "./atoms/particleOptions";
 const App = () => {
     return (
             <Router>
-                <Particles className='particles' params={particleOptions}/>
+                <Particles className='p-particles' params={particleOptions}/>
                 <MainNavBar/>
                 <Switch>
                     <Route path="/details" component={Details}/>

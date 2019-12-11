@@ -12,10 +12,10 @@ html {padding: env(safe-area-inset);}
 body {
   margin: 0;
   padding: 0;
-  background: linear-gradient(to left, rgba(7,27,82,1) 0%, rgba(0,128,128,1) 100%); /* w3c */
+  background: linear-gradient(to left, rgba(7,27,82,1) 0%, rgba(0,128,128,1) 100%);
 }
 
-.particles {
+.p-particles {
   position: fixed;
   top: 0;
   right: 0;
@@ -28,20 +28,4 @@ body {
   padding-top: 6rem;
   padding-bottom: 6rem;
   min-height: 92rem;
-}
-
-.nav-link {color: $white;
-  &:hover {color: $primary}
-  &:focus {color: $warning}
-}
-
-.hyperLink {
-  color: #00b9ff;
-  background-color: transparent;
-  text-decoration-line: underline;
-  font-style: italic;
-  text-decoration:
-  &:hover {
-    color: $primary;
-  }
 }
