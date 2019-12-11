@@ -50,7 +50,7 @@ const Home = () => {
         <div className="container-fluid p-padding text-center">
             <PageTitle Title={'Search Movies'}/>
             <input type="text" size="15" className="h6" onChange={event=>setUserInput(event.target.value)}
-                   onKeyPress={event=>{if (event.key === "Enter") {getmovieData()}}}/>
+                   onKeyPress={event=>{if (event.key === "Enter") {setPageSelected(1);getmovieData()}}}/>
             <button type="submit" value="Submit" className="btn btn-primary btn-sm"
                     onClick={()=>{setPageSelected(1);getmovieData()}}>Title Search</button>
             <br/>
@@ -63,7 +63,7 @@ const Home = () => {
                 <div className="col-xl-3 col-md-6">
                     <PageTitle Title={'Search Movies'}/>
                     <input type="text" size="15" className="h6" onChange={event=>setUserInput(event.target.value)}
-                           onKeyPress={event=>{if (event.key === "Enter") {getmovieData()}}}/>
+                           onKeyPress={event=>{if (event.key === "Enter") {setPageSelected(1);getmovieData()}}}/>
                     <button type="submit" value="Submit" className="btn btn-primary btn-sm"
                                 onClick={()=>{setPageSelected(1);getmovieData()}}>Title Search</button>
                 </div>
