@@ -2,6 +2,7 @@ import React, { useState, useEffect} from 'react';
 import Cardlist from "../molecules/cardlist";
 import movieAPI from "../atoms/movieAPI";
 import PageTitle from "../atoms/pageTitle";
+import ShowResults from "../atoms/ShowResults";
 
 const Home = () => {
     const [moviestoDisplay, setmoviestoDisplay] = useState("");
@@ -26,7 +27,10 @@ const Home = () => {
         setPageArray(TotalPagesArray);
 
         let PagestoFetch = [];
-        for (var z=(PageSelected-1)*(ResultsSelected/10)+1;z<=PageSelected*ResultsSelected/10;z++) {PagestoFetch.push(z)}
+        const TotalFetches = Math.trunc(rawData.totalResults/10)+1;
+
+        for (var z=(PageSelected-1)*(ResultsSelected/10)+1;z<=PageSelected*ResultsSelected/10;z++) {
+            if (z<=TotalFetches) {PagestoFetch.push(z)}}
 
         let TotalMoviestoDisplay = [];
         for (var q=0;q<PagestoFetch.length;q++) {
@@ -64,17 +68,19 @@ const Home = () => {
                     <p className="text-warning">Total Search Results: {TotalResults}</p>
                     <p className="text-warning">Total Pages: {PageArray.length}</p>
                     <label className="text-warning">Results per Page:
-                        <select className="ml-1" value={ResultsSelected} onChange={event => setResultsSelected(event.target.value)}>
+                        <select className="ml-1" value={ResultsSelected}
+                                onChange={event => {setPageSelected(1);setResultsSelected(event.target.value)}}>
                             {ResultsArray.map(item=>(<option key={item} value={item}>{item}</option>))}
                         </select>
                     </label>
                     <br/>
                     <label className="text-warning"> Page:
-                        <select className="ml-1" value={PageSelected} onChange={event => setPageSelected(event.target.value)}>
+                        <select className="ml-1 my-2" value={PageSelected} onChange={event => setPageSelected(event.target.value)}>
                             {PageArray.map(item=>(<option key={item} value={item}>{item}</option>))}
                         </select>
                     </label>
                     <p className="text-warning">Searches Matching: "{localStorage.getItem(`searchString`)}"</p>
+                    <ShowResults PageSelected={PageSelected} ResultsSelected={ResultsSelected} TotalResults={TotalResults}/>
                 </div>
                 <div className="col-xl-3"></div>
             </div>
