@@ -1,24 +1,20 @@
-import React,{useState} from 'react';
+import React,{useState,useContext} from 'react';
 import movieAPI from "../atoms/movieAPI";
 import PageLoading from "../atoms/pageLoading";
+import MovieContext from "../store/store";
 
 const AddRemoveButton = ({ id }) => {
+    const [UserData,setUserData] = useContext(MovieContext);
     const [isLoading,setisLoading]=useState(false);
+    let FavMovieArray = UserData.Favorites;
 
     var isFavMovie = false;
-    if (localStorage.getItem("favoriteArray")) {
-        var FavMovieArray = JSON.parse(localStorage.getItem("favoriteArray"))}
-
-    if (FavMovieArray) {
     for (var i=0;i<FavMovieArray.length;i++) {
         if (id===FavMovieArray[i].imdbID) {isFavMovie=true;}
-    }}
+    }
 
     function onMovieAdd () {
         setisLoading(true);
-        var MovieArray = [];
-        if (localStorage.getItem("favoriteArray")) {
-            MovieArray = JSON.parse(localStorage.getItem("favoriteArray"))}
         async function addMovietoArray () {
             const rawData = await fetch(`https://www.omdbapi.com/?i=${id}&apikey=${movieAPI}`)
                 .then(response => response.json());
@@ -29,20 +25,17 @@ const AddRemoveButton = ({ id }) => {
                 Type: rawData.Type,
                 Poster: rawData.Poster
             };
-            MovieArray.push(MovietoAdd);
-            localStorage.setItem("favoriteArray",JSON.stringify(MovieArray));
+            FavMovieArray.push(MovietoAdd);
+            setUserData(Object.assign({},UserData,{Favorites: FavMovieArray}));
             setisLoading(false);
-            window.location.reload(true);
         }
         addMovietoArray();
     }
 
     function onMovieRemove () {
-        var MovieArray = JSON.parse(localStorage.getItem("favoriteArray"));
-        for (var i=0;i<MovieArray.length;i++) {
-            if (id===MovieArray[i].imdbID) {MovieArray.splice(i,1)}}
-        localStorage.setItem("favoriteArray",JSON.stringify(MovieArray));
-        window.location.reload(true);
+        for (var i=0;i<FavMovieArray.length;i++) {
+            if (id===FavMovieArray[i].imdbID) {FavMovieArray.splice(i,1)}}
+        setUserData(Object.assign({},UserData,{Favorites: FavMovieArray}));
     }
 
     if (isLoading) {return(<PageLoading/>)}

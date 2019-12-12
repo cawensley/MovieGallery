@@ -1,12 +1,12 @@
 import React from 'react';
 
-const ShowResults = ({ResultsSelected,PageSelected,TotalResults}) => {
+const ShowResults = ({Results,Page,Total}) => {
 
-    let minResults=(PageSelected-1)*(ResultsSelected)+1;
-    let maxResults = ResultsSelected*PageSelected;
+    let minResults=(Page-1)*(Results)+1;
+    let maxResults = Results*Page;
 
-    if (ResultsSelected*PageSelected>TotalResults)
-        {maxResults=TotalResults}
+    if (Results*Page>Total)
+        {maxResults=Total}
 
     return <p className="text-warning">Displaying Results: {minResults} through {maxResults}</p>
 };

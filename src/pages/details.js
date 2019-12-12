@@ -1,18 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect,useContext} from 'react';
 import movieAPI from "../atoms/movieAPI";
 import PageTitle from "../atoms/pageTitle";
 import AddRemoveButton from "../molecules/AddRemoveButton";
 import "./details.scss";
 import PageLoading from "../atoms/pageLoading";
+import MovieContext from "../store/store";
 
 const Details = () => {
+    const [UserData] = useContext(MovieContext);
     const [movietoDisplay, setmovietoDisplay] = useState(null);
     const [isLoading,setisLoading]=useState(false);
 
     async function getmovieData() {
         setisLoading(true);
-        const displaymovieID = localStorage.getItem('movieID');
-        const rawData = await fetch(`https://www.omdbapi.com/?i=${displaymovieID}&apikey=${movieAPI}`)
+        const rawData = await fetch(`https://www.omdbapi.com/?i=${UserData.MovieSelected}&apikey=${movieAPI}`)
             .then(response => response.json());
         setmovietoDisplay(rawData);
         setisLoading(false);
@@ -23,7 +24,7 @@ const Details = () => {
 
     if (isLoading) {return(<PageLoading/>)}
 
-    return (!movietoDisplay || !localStorage.getItem('movieID')) ? (
+    return (!movietoDisplay || !UserData.MovieSelected) ? (
         <div className="container-fluid p-padding text-center">
             <PageTitle Title={'Movie Details'}/>
             <h2 className="text-warning">No Movie to Display</h2>

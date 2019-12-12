@@ -1,16 +1,15 @@
-import React, {useEffect} from 'react';
+import React, {useEffect,useContext} from 'react';
 import PageTitle from "../atoms/pageTitle";
 import Cardlist from "../molecules/cardlist";
+import MovieContext from "../store/store";
 
 const Favorites = () => {
-
-    if (localStorage.getItem("favoriteArray")) {
-        var FavMovieArray = JSON.parse(localStorage.getItem("favoriteArray"))}
+    const [UserData] = useContext(MovieContext);
 
     //eslint-disable-next-line
     useEffect (()=> {window.scrollTo(0,0)},[]);
 
-    return (!FavMovieArray) ? (
+    return (!UserData.Favorites) ? (
         <div className="container-fluid p-padding text-center">
             <PageTitle Title={'Favorite Movies'}/>
             <h2 className="text-warning">No Favorites Stored</h2>
@@ -18,7 +17,7 @@ const Favorites = () => {
     ) : (
         <div className="container-fluid p-padding text-center">
             <PageTitle Title={'Favorite Movies'}/>
-            <Cardlist movies={FavMovieArray}/>
+            <Cardlist movies={UserData.Favorites}/>
         </div>
     );
 };
