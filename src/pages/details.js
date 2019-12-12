@@ -4,10 +4,10 @@ import PageTitle from "../atoms/pageTitle";
 import AddRemoveButton from "../molecules/AddRemoveButton";
 import "./details.scss";
 import PageLoading from "../atoms/pageLoading";
-import MovieContext from "../store/store";
+import MovieContext from "../store/MovieContext";
 
 const Details = () => {
-    const [UserData] = useContext(MovieContext);
+    const {UserData} = useContext(MovieContext);
     const [movietoDisplay, setmovietoDisplay] = useState(null);
     const [isLoading,setisLoading]=useState(false);
 

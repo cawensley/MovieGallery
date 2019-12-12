@@ -1,10 +1,10 @@
 import React,{useState,useContext} from 'react';
 import movieAPI from "../atoms/movieAPI";
 import PageLoading from "../atoms/pageLoading";
-import MovieContext from "../store/store";
+import MovieContext from "../store/MovieContext";
 
 const AddRemoveButton = ({ id }) => {
-    const [UserData,setUserData] = useContext(MovieContext);
+    const {UserData,setUserData} = useContext(MovieContext);
     const [isLoading,setisLoading]=useState(false);
     let FavMovieArray = UserData.Favorites;
 
@@ -26,7 +26,7 @@ const AddRemoveButton = ({ id }) => {
                 Poster: rawData.Poster
             };
             FavMovieArray.push(MovietoAdd);
-            setUserData(Object.assign({},UserData,{Favorites: FavMovieArray}));
+            setUserData({type: 'FavoritesChange',payload:FavMovieArray});
             setisLoading(false);
         }
         addMovietoArray();
@@ -35,7 +35,7 @@ const AddRemoveButton = ({ id }) => {
     function onMovieRemove () {
         for (var i=0;i<FavMovieArray.length;i++) {
             if (id===FavMovieArray[i].imdbID) {FavMovieArray.splice(i,1)}}
-        setUserData(Object.assign({},UserData,{Favorites: FavMovieArray}));
+        setUserData({type: 'FavoritesChange',payload:FavMovieArray});
     }
 
     if (isLoading) {return(<PageLoading/>)}

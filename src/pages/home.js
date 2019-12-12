@@ -4,10 +4,10 @@ import movieAPI from "../atoms/movieAPI";
 import PageTitle from "../atoms/pageTitle";
 import ShowResults from "../atoms/ShowResults";
 import PageLoading from "../atoms/pageLoading";
-import MovieContext from "../store/store";
+import MovieContext from "../store/MovieContext";
 
 const Home = () => {
-    const [UserData,setUserData] = useContext(MovieContext);
+    const {UserData,setUserData} = useContext(MovieContext);
     const [moviestoDisplay, setmoviestoDisplay] = useState("");
     const [PageArray,setPageArray]=useState([1]);
     const ResultsArray=[10,20,50];
@@ -57,21 +57,16 @@ const Home = () => {
         setfilteredMovies(FilteredMovieArray);
     }
 
-
     if (isLoading) {return(<PageLoading/>)}
 
     return (!moviestoDisplay || !FetchSuccess) ? (
         <div className="container-fluid p-padding text-center">
             <PageTitle Title={'Search Movies'}/>
             <input type="text" size="15" className="h6"
-                   onChange={event=>setUserData(Object.assign({},UserData,{SearchString: event.target.value}))}
-                   onKeyPress={event=>{if (event.key === "Enter") {
-                       setUserData(Object.assign({},UserData,{PageSelected: 1}));
-                       getmovieData()}}}/>
+                   onChange={event=>setUserData({type:"SearchChange",payload:event.target.value})}
+                   onKeyPress={event=>{if (event.key === "Enter") {setUserData({type:"PageChange",payload:1});getmovieData()}}}/>
             <button type="submit" value="Submit" className="btn btn-primary btn-sm"
-                    onClick={()=>{
-                        setUserData(Object.assign({},UserData,{PageSelected: 1}));
-                        getmovieData()}}>Title Search</button>
+                    onClick={()=>{setUserData({type:"PageChange",payload:1});getmovieData()}}>Title Search</button>
             <br/>
             <h2 className="text-warning">No Searches Matching: {UserData.SearchString}</h2>
         </div>
@@ -82,14 +77,10 @@ const Home = () => {
                 <div className="col-xl-3 col-md-6">
                     <PageTitle Title={'Search Movies'}/>
                     <input type="text" placeholder="Enter a movie title" className="h6"
-                           onChange={event=>setUserData(Object.assign({},UserData,{SearchString: event.target.value}))}
-                           onKeyPress={event=>{if (event.key === "Enter") {
-                               setUserData(Object.assign({},UserData,{PageSelected: 1}));
-                               getmovieData()}}}/>
+                           onChange={event=>setUserData({type:"SearchChange",payload:event.target.value})}
+                           onKeyPress={event=>{if (event.key === "Enter") {setUserData({type:"PageChange",payload:1});getmovieData()}}}/>
                     <button type="submit" value="Submit" className="btn btn-primary btn-sm"
-                                onClick={()=>{
-                                    setUserData(Object.assign({},UserData,{PageSelected: 1}));
-                                    getmovieData()}}>Title Search</button>
+                                onClick={()=>{setUserData({type:"PageChange",payload:1});getmovieData()}}>Title Search</button>
                     <h5 className="text-white mt-2" >Filter Title By:</h5>
                     <input type="search" placeholder="Enter filter term" className="h6" onChange={event=>onFilterChange(event.target.value)}/>
                 </div>
@@ -98,16 +89,14 @@ const Home = () => {
                     <p className="text-warning">Total Pages: {PageArray.length}</p>
                     <label className="text-warning">Results per Page:
                         <select className="ml-1" value={UserData.ResultsSelected}
-                                onChange={event => {
-                                    setUserData(Object.assign({},UserData,{PageSelected: 1}));
-                                    setUserData(Object.assign({},UserData,{ResultsSelected: event.target.value}))}}>
+                                onChange={event => {setUserData({type:"PageChange",payload:1});setUserData({type:"ResultsChange",payload:event.target.value})}}>
                             {ResultsArray.map(item=>(<option key={item} value={item}>{item}</option>))}
                         </select>
                     </label>
                     <br/>
                     <label className="text-warning"> Page:
-                        <select className="ml-1 my-2" value={UserData.PageSelected} onChange={event =>
-                            setUserData(Object.assign({},UserData,{PageSelected: event.target.value}))}>
+                        <select className="ml-1 my-2" value={UserData.PageSelected}
+                                onChange={event =>setUserData({type:"PageChange",payload:event.target.value})}>
                             {PageArray.map(item=>(<option key={item} value={item}>{item}</option>))}
                         </select>
                     </label>

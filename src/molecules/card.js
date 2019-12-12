@@ -2,14 +2,14 @@ import React,{useContext} from 'react';
 import './card.scss';
 import {Link} from "react-router-dom";
 import AddRemoveButton from "./AddRemoveButton";
-import MovieContext from "../store/store";
+import MovieContext from "../store/MovieContext";
 
 const Card = ({Title,Year,id,Type,Poster}) => {
-    const [UserData,setUserData] = useContext(MovieContext);
+    const {setUserData} = useContext(MovieContext);
 
     return (
         <div className="card d-inline-flex m-card-width m-card-hover m-1 bg-dark">
-            <Link to="/details" onClick={()=>setUserData(Object.assign({},UserData,{MovieSelected: `${id}`}))}>
+            <Link to="/details" onClick={()=>setUserData({type:"MovieChange",payload: `${id}`})}>
                 <img className="m-cardimg-height w-100" alt='Error Loading' src={`${Poster}`}/>
                 <div className="card-body">
                     <h5 className="card-title text-warning">{Title}</h5>

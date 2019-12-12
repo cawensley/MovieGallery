@@ -1,5 +1,5 @@
 import {createContext} from 'react';
 
-const MovieContext= createContext(["green",()=>{}]);
+const MovieContext= createContext();
 
 export default MovieContext;

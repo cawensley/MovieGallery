@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React from 'react';
 import {HashRouter as Router, Switch, Route} from "react-router-dom";
 import MainNavBar from "./organisms/MainNavBar"
 import Favorites from "./pages/favorites";
@@ -7,19 +7,12 @@ import Details from "./pages/details";
 import Footer from "./organisms/footer";
 import Particles from 'react-particles-js';
 import particleOptions from "./atoms/particleOptions";
-import MovieContext from "./store/store";
+import MovieState from "./store/Reducer";
 
 const App = () => {
-    const UserData = useState({
-        SearchString: "star",
-        Favorites: [],
-        MovieSelected: "tt1663662",
-        PageSelected: 1,
-        ResultsSelected: 10
-    });
 
     return (
-        <MovieContext.Provider value={UserData}>
+        <MovieState>
             <Router>
                 <Particles className='p-particles' params={particleOptions}/>
                 <MainNavBar/>
@@ -30,7 +23,7 @@ const App = () => {
                 </Switch>
                 <Footer/>
             </Router>
-        </MovieContext.Provider>
+        </MovieState>
     )
 };
 
