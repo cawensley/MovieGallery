@@ -18,7 +18,6 @@ const Details = () => {
             .then(response => response.json());
         setmovietoDisplay(rawData);
         if(rawData.Poster!=="N/A") {setPosterImage(rawData.Poster)}
-        console.log(rawData);
         setisLoading(false);
     }
 

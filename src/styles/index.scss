@@ -12,7 +12,8 @@ html {padding: env(safe-area-inset);}
 body {
   margin: 0;
   padding: 0;
-  background: linear-gradient(to left, rgba(7,27,82,1) 0%, rgba(0,128,128,1) 100%);
+  background: repeating-linear-gradient(to left, rgba(7,27,82,1) 0%, rgba(0,128,128,1) 100%);
+  background-color: rgba(7,27,82,1);
 }
 
 .p-particles {
@@ -26,6 +27,6 @@ body {
 
 .p-padding {
   padding-top: 6rem;
-  padding-bottom: 6rem;
-  min-height: 92rem;
+  padding-bottom: 1rem;
+  min-height: 96vh;
 }
