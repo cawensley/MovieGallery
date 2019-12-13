@@ -10,12 +10,15 @@ const Details = () => {
     const {UserData} = useContext(MovieContext);
     const [movietoDisplay, setmovietoDisplay] = useState(null);
     const [isLoading,setisLoading]=useState(false);
+    const [PosterImage,setPosterImage]=useState(require(`../images/imageBlank.jpg`));
 
     async function getmovieData() {
         setisLoading(true);
         const rawData = await fetch(`https://www.omdbapi.com/?i=${UserData.MovieSelected}&apikey=${movieAPI}`)
             .then(response => response.json());
         setmovietoDisplay(rawData);
+        if(rawData.Poster!=="N/A") {setPosterImage(rawData.Poster)}
+        console.log(rawData);
         setisLoading(false);
     }
 
@@ -32,7 +35,7 @@ const Details = () => {
     ) : (
         <div className="container-fluid p-padding text-center ">
             <PageTitle Title={'Movie Details'}/>
-            <img className="p-movieimage-height p-movieimage-width bg-dark" alt='Error Loading' src={movietoDisplay.Poster}/><br/>
+            <img className="p-movieimage-height p-movieimage-width bg-dark" alt='Error Loading' src={PosterImage}/><br/>
             <AddRemoveButton id={movietoDisplay.imdbID}/>
             <div className="row justify-content-center ">
                 <table className="table table-striped table-bordered text-white my-4 col-md-10 col-lg-6 bg-secondary">

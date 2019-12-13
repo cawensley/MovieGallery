@@ -6,11 +6,13 @@ import MovieContext from "../store/MovieContext";
 
 const Card = ({Title,Year,id,Type,Poster}) => {
     const {setUserData} = useContext(MovieContext);
+    var DisplayPoster = `${Poster}`;
+    if(DisplayPoster==="N/A") {DisplayPoster=require(`../images/imageBlank.jpg`)}
 
     return (
         <div className="card d-inline-flex m-card-width m-card-hover m-1 bg-dark">
             <Link to="/details" onClick={()=>setUserData({type:"MovieChange",payload: `${id}`})}>
-                <img className="m-cardimg-height w-100" alt='Error Loading' src={`${Poster}`}/>
+                <img className="m-cardimg-height w-100" alt='Error Loading' src={DisplayPoster}/>
                 <div className="card-body">
                     <h5 className="card-title text-warning">{Title}</h5>
                     <p className="card-text text-light">Year: {Year}</p>

@@ -16,12 +16,12 @@ const Home = () => {
     const [isLoading,setisLoading]=useState(false);
     const filterTerm=useRef("");
     const [filteredMovies,setfilteredMovies]=useState([]);
-    const [lastSearch,setlastSearch]=useState("");
+    const [userInput,setUserInput]=useState(UserData.SearchString);
 
     async function getmovieData() {
         setisLoading(true);
-        setlastSearch(UserData.SearchString);
-        const rawData = await fetch(`https://www.omdbapi.com/?s=${UserData.SearchString}&apikey=${movieAPI}`)
+        setUserData({type:"SearchChange",payload:userInput});
+        const rawData = await fetch(`https://www.omdbapi.com/?s=${userInput}&apikey=${movieAPI}`)
             .then(response => response.json());
         setTotalResults(rawData.totalResults);
 
@@ -40,7 +40,7 @@ const Home = () => {
 
         let TotalMoviestoDisplay = [];
         for (var q=0;q<PagestoFetch.length;q++) {
-            const MovieGrouping = await fetch(`https://www.omdbapi.com/?s=${UserData.SearchString}&page=${PagestoFetch[q]}&apikey=${movieAPI}`)
+            const MovieGrouping = await fetch(`https://www.omdbapi.com/?s=${userInput}&page=${PagestoFetch[q]}&apikey=${movieAPI}`)
                 .then(response => response.json());
             for (var d=0;d<MovieGrouping.Search.length;d++) {TotalMoviestoDisplay.push(MovieGrouping.Search[d])}}
         setmoviestoDisplay(TotalMoviestoDisplay);
@@ -64,13 +64,12 @@ const Home = () => {
     return (!moviestoDisplay || !FetchSuccess) ? (
         <div className="container-fluid p-padding text-center">
             <PageTitle Title={'Search Movies'}/>
-            <input type="text" size="15" className="h6"
-                   onChange={event=>setUserData({type:"SearchChange",payload:event.target.value})}
+            <input type="text" size="15" className="h6" onChange={event=>setUserInput(event.target.value)}
                    onKeyPress={event=>{if (event.key === "Enter") {setUserData({type:"PageChange",payload:1});getmovieData()}}}/>
             <button type="submit" value="Submit" className="btn btn-primary btn-sm"
                     onClick={()=>{setUserData({type:"PageChange",payload:1});getmovieData()}}>Title Search</button>
             <br/>
-            <h2 className="text-warning">No Searches Matching: {lastSearch}</h2>
+            <h2 className="text-warning">No Searches Matching: {UserData.SearchString}</h2>
         </div>
     ) : (
         <div className="container-fluid p-padding text-center">
@@ -78,8 +77,7 @@ const Home = () => {
                 <div className="col-xl-3"></div>
                 <div className="col-xl-3 col-md-6">
                     <PageTitle Title={'Search Movies'}/>
-                    <input type="text" placeholder="Enter a movie title" className="h6"
-                           onChange={event=>setUserData({type:"SearchChange",payload:event.target.value})}
+                    <input type="text" placeholder="Enter a movie title" className="h6" onChange={event=>setUserInput(event.target.value)}
                            onKeyPress={event=>{if (event.key === "Enter") {setUserData({type:"PageChange",payload:1});getmovieData()}}}/>
                     <button type="submit" value="Submit" className="btn btn-primary btn-sm"
                             onClick={()=>{setUserData({type:"PageChange",payload:1});getmovieData()}}>Title Search</button>
@@ -102,7 +100,7 @@ const Home = () => {
                             {PageArray.map(item=>(<option key={item} value={item}>{item}</option>))}
                         </select>
                     </label>
-                    <p className="text-warning">Searches Matching: "{lastSearch}"</p>
+                    <p className="text-warning">Searches Matching: "{UserData.SearchString}"</p>
                     <ShowResults Page={UserData.PageSelected} Results={UserData.ResultsSelected} Total={TotalResults}/>
                 </div>
                 <div className="col-xl-3"></div>
