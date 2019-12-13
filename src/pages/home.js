@@ -16,9 +16,11 @@ const Home = () => {
     const [isLoading,setisLoading]=useState(false);
     const filterTerm=useRef("");
     const [filteredMovies,setfilteredMovies]=useState([]);
+    const [lastSearch,setlastSearch]=useState("");
 
     async function getmovieData() {
         setisLoading(true);
+        setlastSearch(UserData.SearchString);
         const rawData = await fetch(`https://www.omdbapi.com/?s=${UserData.SearchString}&apikey=${movieAPI}`)
             .then(response => response.json());
         setTotalResults(rawData.totalResults);
@@ -68,7 +70,7 @@ const Home = () => {
             <button type="submit" value="Submit" className="btn btn-primary btn-sm"
                     onClick={()=>{setUserData({type:"PageChange",payload:1});getmovieData()}}>Title Search</button>
             <br/>
-            <h2 className="text-warning">No Searches Matching: {UserData.SearchString}</h2>
+            <h2 className="text-warning">No Searches Matching: {lastSearch}</h2>
         </div>
     ) : (
         <div className="container-fluid p-padding text-center">
@@ -80,7 +82,7 @@ const Home = () => {
                            onChange={event=>setUserData({type:"SearchChange",payload:event.target.value})}
                            onKeyPress={event=>{if (event.key === "Enter") {setUserData({type:"PageChange",payload:1});getmovieData()}}}/>
                     <button type="submit" value="Submit" className="btn btn-primary btn-sm"
-                                onClick={()=>{setUserData({type:"PageChange",payload:1});getmovieData()}}>Title Search</button>
+                            onClick={()=>{setUserData({type:"PageChange",payload:1});getmovieData()}}>Title Search</button>
                     <h5 className="text-white mt-2" >Filter Title By:</h5>
                     <input type="search" placeholder="Enter filter term" className="h6" onChange={event=>onFilterChange(event.target.value)}/>
                 </div>
@@ -100,7 +102,7 @@ const Home = () => {
                             {PageArray.map(item=>(<option key={item} value={item}>{item}</option>))}
                         </select>
                     </label>
-                    <p className="text-warning">Searches Matching: "{UserData.SearchString}"</p>
+                    <p className="text-warning">Searches Matching: "{lastSearch}"</p>
                     <ShowResults Page={UserData.PageSelected} Results={UserData.ResultsSelected} Total={TotalResults}/>
                 </div>
                 <div className="col-xl-3"></div>

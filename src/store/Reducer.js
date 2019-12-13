@@ -2,28 +2,33 @@ import React,{useReducer} from 'react';
 import MovieContext from "./MovieContext";
 
 const initialState = {
-    SearchString: "",
-    Favorites: [],
-    MovieSelected: null,
-    PageSelected: 1,
-    ResultsSelected: 10
+    SearchString: (localStorage.getItem("Searchstring") || ""),
+    Favorites: (JSON.parse(localStorage.getItem("FavoriteArray")) || []),
+    MovieSelected: (localStorage.getItem("Movieselected") || null),
+    PageSelected: (localStorage.getItem("Pageselected") || 1),
+    ResultsSelected: (localStorage.getItem("Resultsselected") || 10)
 };
 
 const MovieState = ({children}) => {
-    const [UserData,setUserData] = useReducer((state,action) => {
+    const [UserData,setUserData] = useReducer((UserData,action) => {
         switch(action.type) {
             case 'SearchChange':
-                return Object.assign({},state,{SearchString: action.payload});
+                localStorage.setItem("Searchstring",action.payload);
+                return Object.assign({},UserData,{SearchString: action.payload});
             case 'FavoritesChange':
-                return Object.assign({},state,{Favorites: action.payload});
+                localStorage.setItem("FavoriteArray",JSON.stringify(action.payload));
+                return Object.assign({},UserData,{Favorites: action.payload});
             case 'MovieChange':
-                return Object.assign({},state,{MovieSelected: action.payload});
+                localStorage.setItem("Movieselected",action.payload);
+                return Object.assign({},UserData,{MovieSelected: action.payload});
             case 'PageChange':
-                return Object.assign({},state,{PageSelected: action.payload});
+                localStorage.setItem("Pageselected",action.payload);
+                return Object.assign({},UserData,{PageSelected: action.payload});
             case 'ResultsChange':
-                return Object.assign({},state,{ResultsSelected: action.payload});
+                localStorage.setItem("Resultsselected",action.payload);
+                return Object.assign({},UserData,{ResultsSelected: action.payload});
             default:
-                return state;
+                return UserData;
         }
     },initialState);
 
