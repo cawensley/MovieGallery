@@ -1,20 +1,24 @@
-import React, { useState, useEffect,useRef,useContext} from 'react';
+import React, {useState,useEffect,useRef} from 'react';
 import Cardlist from "../molecules/cardlist";
 import movieAPI from "../atoms/movieAPI";
 import PageTitle from "../atoms/pageTitle";
 import ShowResults from "../atoms/ShowResults";
 import PageLoading from "../atoms/pageLoading";
-import MovieContext from "../store/MovieContext";
+import {connect} from 'react-redux';
+import PageChange from "../Redux/actions/PageChange";
+import ResultsChange from "../Redux/actions/ResultsChange";
+import SearchChange from "../Redux/actions/SearchChange";
+import MovieChange from "../Redux/actions/MovieChange";
+import FavoritesChange from "../Redux/actions/FavoritesChange";
 
-const Home = () => {
-    const {UserData,setUserData} = useContext(MovieContext);
+const Home = (props) => {
     const [moviestoDisplay, setmoviestoDisplay] = useState("");
     const [PageArray,setPageArray]=useState([1]);
     const ResultsArray=[10,20,50];
     const [TotalResults,setTotalResults]=useState();
     const [FetchSuccess,setFetchSuccess]=useState(false);
     const [isLoading,setisLoading]=useState(false);
-    const [userInput,setUserInput]=useState(UserData.SearchString);
+    const [userInput,setUserInput]=useState(props.search);
     const [filteredMovies,setfilteredMovies]=useState([]);
     const filterTerm=useRef("");
     const TypeFilterArray=["movie","series","game"];
@@ -22,7 +26,7 @@ const Home = () => {
 
     async function getmovieData() {
         setisLoading(true);
-        setUserData({type:"SearchChange",payload:userInput});
+        props.setSearchString(userInput);
         const rawData = await fetch(`https://www.omdbapi.com/?s=${userInput}&apikey=${movieAPI}`)
             .then(response => response.json());
         setTotalResults(rawData.totalResults);
@@ -30,14 +34,14 @@ const Home = () => {
         var wasFetchSuccess = (rawData.Response === "True");
         setFetchSuccess(wasFetchSuccess);
 
-        const TotalPages = Math.ceil(rawData.totalResults/UserData.ResultsSelected);
+        const TotalPages = Math.ceil(rawData.totalResults/props.results);
         let TotalPagesArray = [];
         for (var i=1;i<=TotalPages;i++) {TotalPagesArray.push(i)}
         setPageArray(TotalPagesArray);
 
         let PagestoFetch = [];
         const TotalFetches = Math.ceil(rawData.totalResults/10);
-        for (var z=(UserData.PageSelected-1)*(UserData.ResultsSelected/10)+1;z<=UserData.PageSelected*UserData.ResultsSelected/10;z++) {
+        for (var z=(props.page-1)*(props.results/10)+1;z<=props.page*props.results/10;z++) {
             if (z<=TotalFetches) {PagestoFetch.push(z)}}
 
         let TotalMoviestoDisplay = [];
@@ -53,7 +57,7 @@ const Home = () => {
     }
 
     //eslint-disable-next-line
-    useEffect (()=> {if (UserData.SearchString!==null) {getmovieData()} window.scrollTo(0,0)},[UserData.PageSelected,UserData.ResultsSelected]);
+    useEffect (()=> {if (props.search!==null) {getmovieData()} window.scrollTo(0,0)},[props.page,props.results]);
 
     function onFilterChange () {
         const FilteredMovieArray1 = moviestoDisplay.filter(movie=>{
@@ -69,11 +73,11 @@ const Home = () => {
         <div className="container-fluid p-padding text-center">
             <PageTitle Title={'Search Movies'}/>
             <input type="text" size="15" className="h6" onChange={event=>setUserInput(event.target.value)}
-                   onKeyPress={event=>{if (event.key === "Enter") {setUserData({type:"PageChange",payload:1});getmovieData()}}}/>
+                   onKeyPress={event=>{if (event.key === "Enter") {props.setPageChange(1);getmovieData()}}}/>
             <button type="submit" value="Submit" className="btn btn-primary btn-sm"
-                    onClick={()=>{setUserData({type:"PageChange",payload:1});getmovieData()}}>Title Search</button>
+                    onClick={()=>{props.setPageChange(1);getmovieData()}}>Title Search</button>
             <br/>
-            <h2 className="text-warning">No Searches Matching: {UserData.SearchString}</h2>
+            <h2 className="text-warning">No Searches Matching: {props.search}</h2>
         </div>
     ) : (
         <div className="container-fluid p-padding text-center">
@@ -82,9 +86,9 @@ const Home = () => {
                 <div className="col-xl-3 col-md-6">
                     <PageTitle Title={'Search Movies'}/>
                     <input type="text" placeholder="Enter a movie title" className="h6" onChange={event=>setUserInput(event.target.value)}
-                           onKeyPress={event=>{if (event.key === "Enter") {setUserData({type:"PageChange",payload:1});getmovieData()}}}/>
+                           onKeyPress={event=>{if (event.key === "Enter") {props.setPageChange(1);getmovieData()}}}/>
                     <button type="submit" value="Submit" className="btn btn-primary btn-sm"
-                            onClick={()=>{setUserData({type:"PageChange",payload:1});getmovieData()}}>Title Search</button>
+                            onClick={()=>{props.setPageChange(1);getmovieData()}}>Title Search</button>
                     <h6 className="text-white mt-2" >Filter Title By:</h6>
                     <input type="search" placeholder="Enter filter term" className="h6"
                            onChange={event=>{filterTerm.current = event.target.value.toLowerCase();onFilterChange()}}/>
@@ -101,26 +105,35 @@ const Home = () => {
                     <p className="text-warning">Total Search Results: {TotalResults}</p>
                     <p className="text-warning">Total Pages: {PageArray.length}</p>
                     <label className="text-warning">Results per Page:
-                        <select className="ml-1" value={UserData.ResultsSelected}
-                                onChange={event => {setUserData({type:"PageChange",payload:1});setUserData({type:"ResultsChange",payload:event.target.value})}}>
+                        <select className="ml-1" value={props.results}
+                                onChange={event => {props.setPageChange(1);props.setResultsChange(event.target.value)}}>
                             {ResultsArray.map(item=>(<option key={item} value={item}>{item}</option>))}
                         </select>
                     </label>
                     <br/>
                     <label className="text-warning"> Page:
-                        <select className="ml-1 my-2" value={UserData.PageSelected}
-                                onChange={event =>setUserData({type:"PageChange",payload:event.target.value})}>
+                        <select className="ml-1 my-2" value={props.page}
+                                onChange={event =>props.setPageChange(event.target.value)}>
                             {PageArray.map(item=>(<option key={item} value={item}>{item}</option>))}
                         </select>
                     </label>
-                    <p className="text-warning">Searches Matching: "{UserData.SearchString}"</p>
-                    <ShowResults Page={UserData.PageSelected} Results={UserData.ResultsSelected} Total={TotalResults}/>
+                    <p className="text-warning">Searches Matching: "{props.search}"</p>
+                    <ShowResults Page={props.page} Results={props.results} Total={TotalResults}/>
                 </div>
                 <div className="col-xl-3"></div>
             </div>
-            <Cardlist movies={filteredMovies}/>
+            <Cardlist movies={filteredMovies} props={props}/>
         </div>
     )
 };
 
-export default Home;
+const mapStatetoProps = ({page,results,search,movie,favorites})=>({page,results,search,movie,favorites});
+const mapDispatchtoProps = dispatch => ({
+    setPageChange: page=>dispatch(PageChange(page)),
+    setResultsChange: results=>dispatch(ResultsChange(results)),
+    setSearchString: string=>dispatch(SearchChange(string)),
+    setMovieChange: movie=>dispatch(MovieChange(movie)),
+    setFavoritesArray: favoritemovies=>dispatch(FavoritesChange(favoritemovies))
+});
+
+export default connect(mapStatetoProps,mapDispatchtoProps)(Home);

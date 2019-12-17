@@ -7,12 +7,13 @@ import Details from "./pages/details";
 import Footer from "./organisms/footer";
 import Particles from 'react-particles-js';
 import particleOptions from "./atoms/particleOptions";
-import MovieState from "./store/Reducer";
+import store from "./Redux/store";
+import {Provider} from 'react-redux';
 
 const App = () => {
 
     return (
-        <MovieState>
+        <Provider store={store}>
             <Router>
                 <Particles className='p-particles' params={particleOptions}/>
                 <MainNavBar/>
@@ -23,7 +24,7 @@ const App = () => {
                 </Switch>
                 <Footer/>
             </Router>
-        </MovieState>
+        </Provider>
     )
 };
 
