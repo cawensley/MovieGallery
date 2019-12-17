@@ -14,9 +14,11 @@ const Home = () => {
     const [TotalResults,setTotalResults]=useState();
     const [FetchSuccess,setFetchSuccess]=useState(false);
     const [isLoading,setisLoading]=useState(false);
-    const filterTerm=useRef("");
-    const [filteredMovies,setfilteredMovies]=useState([]);
     const [userInput,setUserInput]=useState(UserData.SearchString);
+    const [filteredMovies,setfilteredMovies]=useState([]);
+    const filterTerm=useRef("");
+    const TypeFilterArray=["movie","series","game"];
+    const filterType=useRef("");
 
     async function getmovieData() {
         setisLoading(true);
@@ -45,6 +47,7 @@ const Home = () => {
             for (var d=0;d<MovieGrouping.Search.length;d++) {TotalMoviestoDisplay.push(MovieGrouping.Search[d])}}
         setmoviestoDisplay(TotalMoviestoDisplay);
         filterTerm.current = "";
+        filterType.current = "";
         setfilteredMovies(TotalMoviestoDisplay);
         setisLoading(false);
     }
@@ -52,11 +55,12 @@ const Home = () => {
     //eslint-disable-next-line
     useEffect (()=> {if (UserData.SearchString!==null) {getmovieData()} window.scrollTo(0,0)},[UserData.PageSelected,UserData.ResultsSelected]);
 
-    function onFilterChange (event) {
-        filterTerm.current = event.toLowerCase();
-        const FilteredMovieArray = moviestoDisplay.filter(movie=>{
+    function onFilterChange () {
+        const FilteredMovieArray1 = moviestoDisplay.filter(movie=>{
             return movie.Title.toLowerCase().includes(filterTerm.current);});
-        setfilteredMovies(FilteredMovieArray);
+        const FilteredMovieArray2 = FilteredMovieArray1.filter(movie=>{
+            return movie.Type.includes(filterType.current)});
+        setfilteredMovies(FilteredMovieArray2);
     }
 
     if (isLoading) {return(<PageLoading/>)}
@@ -81,8 +85,17 @@ const Home = () => {
                            onKeyPress={event=>{if (event.key === "Enter") {setUserData({type:"PageChange",payload:1});getmovieData()}}}/>
                     <button type="submit" value="Submit" className="btn btn-primary btn-sm"
                             onClick={()=>{setUserData({type:"PageChange",payload:1});getmovieData()}}>Title Search</button>
-                    <h5 className="text-white mt-2" >Filter Title By:</h5>
-                    <input type="search" placeholder="Enter filter term" className="h6" onChange={event=>onFilterChange(event.target.value)}/>
+                    <h6 className="text-white mt-2" >Filter Title By:</h6>
+                    <input type="search" placeholder="Enter filter term" className="h6"
+                           onChange={event=>{filterTerm.current = event.target.value.toLowerCase();onFilterChange()}}/>
+                    <br/>
+                    <label className="text-white h6">Filter Type By:
+                        <select className="my-2" value={filterType.current}
+                                onChange={event => {filterType.current=event.target.value;onFilterChange()}}>
+                            <option key={""} value={""}>Show All</option>
+                            {TypeFilterArray.map(item=>(<option key={item} value={item}>{item}</option>))}
+                        </select>
+                    </label>
                 </div>
                 <div className="col-xl-3 col-md-6 text-md-left">
                     <p className="text-warning">Total Search Results: {TotalResults}</p>
