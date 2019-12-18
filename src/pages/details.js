@@ -3,22 +3,18 @@ import movieAPI from "../atoms/movieAPI";
 import PageTitle from "../atoms/pageTitle";
 import "./details.scss";
 import PageLoading from "../atoms/pageLoading";
-import {connect} from 'react-redux';
 import AddRemoveButton from "../molecules/AddRemoveButton";
-import PageChange from "../Redux/actions/PageChange";
-import ResultsChange from "../Redux/actions/ResultsChange";
-import SearchChange from "../Redux/actions/SearchChange";
-import MovieChange from "../Redux/actions/MovieChange";
-import FavoritesChange from "../Redux/actions/FavoritesChange";
+import store from "../Redux/store";
 
-const Details = (props) => {
+const Details = () => {
+    const movieIDtoDisplay=store.getState().movie;
     const [movietoDisplay, setmovietoDisplay] = useState(null);
     const [isLoading,setisLoading]=useState(false);
     const [PosterImage,setPosterImage]=useState(require(`../images/imageBlank.jpg`));
 
     async function getmovieData() {
         setisLoading(true);
-        const rawData = await fetch(`https://www.omdbapi.com/?i=${props.movie}&apikey=${movieAPI}`)
+        const rawData = await fetch(`https://www.omdbapi.com/?i=${movieIDtoDisplay}&apikey=${movieAPI}`)
             .then(response => response.json());
         setmovietoDisplay(rawData);
         if(rawData.Poster!=="N/A") {setPosterImage(rawData.Poster)}
@@ -30,7 +26,7 @@ const Details = (props) => {
 
     if (isLoading) {return(<PageLoading/>)}
 
-    return (!movietoDisplay || !props.movie) ? (
+    return (!movietoDisplay || !movieIDtoDisplay) ? (
         <div className="container-fluid p-padding text-center">
             <PageTitle Title={'Movie Details'}/>
             <h2 className="text-warning">No Movie to Display</h2>
@@ -39,7 +35,7 @@ const Details = (props) => {
         <div className="container-fluid p-padding text-center ">
             <PageTitle Title={'Movie Details'}/>
             <img className="p-movieimage-height p-movieimage-width bg-dark" alt='Error Loading' src={PosterImage}/><br/>
-            <AddRemoveButton id={movietoDisplay.imdbID} props={props}/>
+            <AddRemoveButton id={movietoDisplay.imdbID}/>
             <div className="row justify-content-center ">
                 <table className="table table-striped table-bordered text-white my-4 col-md-10 col-lg-6 bg-secondary">
                     <tbody>
@@ -99,14 +95,4 @@ const Details = (props) => {
     )
 };
 
-
-const mapStatetoProps = ({page,results,search,movie,favorites})=>({page,results,search,movie,favorites});
-const mapDispatchtoProps = dispatch => ({
-    setPageChange: page=>dispatch(PageChange(page)),
-    setResultsChange: results=>dispatch(ResultsChange(results)),
-    setSearchString: string=>dispatch(SearchChange(string)),
-    setMovieChange: movie=>dispatch(MovieChange(movie)),
-    setFavoritesArray: favoritemovies=>dispatch(FavoritesChange(favoritemovies))
-});
-
-export default connect(mapStatetoProps,mapDispatchtoProps)(Details);
+export default Details;

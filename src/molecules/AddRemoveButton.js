@@ -1,16 +1,12 @@
 import React,{useState} from 'react';
 import movieAPI from "../atoms/movieAPI";
 import PageLoading from "../atoms/pageLoading";
-import {connect} from "react-redux";
 import FavoritesChange from "../Redux/actions/FavoritesChange";
-import PageChange from "../Redux/actions/PageChange";
-import ResultsChange from "../Redux/actions/ResultsChange";
-import SearchChange from "../Redux/actions/SearchChange";
-import MovieChange from "../Redux/actions/MovieChange";
+import store from "../Redux/store";
 
-const AddRemoveButton = ({id , props}) => {
+const AddRemoveButton = ({id}) => {
     const [isLoading,setisLoading]=useState(false);
-    let FavMovieArray = props.favorites;
+    let FavMovieArray = store.getState().favorites;
 
     var isFavMovie = false;
     for (var i=0;i<FavMovieArray.length;i++) {
@@ -30,7 +26,7 @@ const AddRemoveButton = ({id , props}) => {
                 Poster: rawData.Poster
             };
             FavMovieArray.push(MovietoAdd);
-            props.setFavoritesArray(FavMovieArray);
+            store.dispatch(FavoritesChange(FavMovieArray));
             setisLoading(false);
         }
         addMovietoArray();
@@ -39,7 +35,7 @@ const AddRemoveButton = ({id , props}) => {
     function onMovieRemove () {
         for (var i=0;i<FavMovieArray.length;i++) {
             if (id===FavMovieArray[i].imdbID) {FavMovieArray.splice(i,1)}}
-        props.setFavoritesArray(FavMovieArray);
+        store.dispatch(FavoritesChange(FavMovieArray));
         window.location.reload(true);
     }
 
@@ -58,13 +54,4 @@ const AddRemoveButton = ({id , props}) => {
     );
 };
 
-const mapStatetoProps = ({page,results,search,movie,favorites})=>({page,results,search,movie,favorites});
-const mapDispatchtoProps = dispatch => ({
-    setPageChange: page=>dispatch(PageChange(page)),
-    setResultsChange: results=>dispatch(ResultsChange(results)),
-    setSearchString: string=>dispatch(SearchChange(string)),
-    setMovieChange: movie=>dispatch(MovieChange(movie)),
-    setFavoritesArray: favoritemovies=>dispatch(FavoritesChange(favoritemovies))
-});
-
-export default connect(mapStatetoProps,mapDispatchtoProps)(AddRemoveButton);
+export default AddRemoveButton;
