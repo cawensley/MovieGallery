@@ -45,15 +45,13 @@ const Home = () => {
     }
 
     const TotalMoviestoDisplay = [];
-    for (let q = 0; q < PagestoFetch.length; q += 1) {
-      await fetch(`https://www.omdbapi.com/?s=${userInput.current}&page=${PagestoFetch[q]}&apikey=${movieAPI}`)
+    const moviepromises = PagestoFetch.map((value) => {
+      const moviebatch = fetch(`https://www.omdbapi.com/?s=${userInput.current}&page=${value}&apikey=${movieAPI}`)
         .then((response) => response.json())
-        .then((data) => {
-          for (let d = 0; d < data.Search.length; d += 1) {
-            TotalMoviestoDisplay.push(data.Search[d]);
-          }
-        });
-    }
+        .then((data) => data.Search.map((singlemovie) => TotalMoviestoDisplay.push(singlemovie)));
+      return (moviebatch);
+    });
+    await Promise.all(moviepromises);
     filterTerm.current = '';
     filterType.current = '';
     setmoviestoDisplay(TotalMoviestoDisplay);
