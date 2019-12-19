@@ -1,3 +1,3 @@
-const movieAPI = "bf0372ee";
+const movieAPI = 'bf0372ee';
 
 export default movieAPI;
