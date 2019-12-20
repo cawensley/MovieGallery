@@ -52,10 +52,16 @@ const Home = () => {
       return (moviebatch);
     });
     await Promise.all(moviepromises);
+
+    const uniqueMoviesArray = Array.from(
+      new Set(TotalMoviestoDisplay.map((unique) => unique.imdbID)),
+    )
+      .map((imdbID) => TotalMoviestoDisplay.find((movie) => movie.imdbID === imdbID));
+
     filterTerm.current = '';
     filterType.current = '';
-    setmoviestoDisplay(TotalMoviestoDisplay);
-    setfilteredMovies(TotalMoviestoDisplay);
+    setmoviestoDisplay(uniqueMoviesArray);
+    setfilteredMovies(uniqueMoviesArray);
     setisLoading(false);
   }
 

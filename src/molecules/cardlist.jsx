@@ -5,17 +5,17 @@ import Card from './card';
 const Cardlist = ({ movies }) => (
   <div>
     {
-                movies.map((user, i) => (
-                  <Card
-                    key={movies[i].imdbID}
-                    Title={movies[i].Title}
-                    Year={movies[i].Year}
-                    imdbID={movies[i].imdbID}
-                    Type={movies[i].Type}
-                    Poster={movies[i].Poster}
-                  />
-                ))
-            }
+        movies.map((user, i) => (
+          <Card
+            key={movies[i].imdbID}
+            Title={movies[i].Title}
+            Year={movies[i].Year}
+            imdbID={movies[i].imdbID}
+            Type={movies[i].Type}
+            Poster={movies[i].Poster}
+          />
+        ))
+      }
   </div>
 );
 
