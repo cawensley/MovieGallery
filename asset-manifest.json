@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/moviegallery/static/css/main.b4264841.chunk.css",
-    "main.js": "/moviegallery/static/js/main.5556e935.chunk.js",
-    "main.js.map": "/moviegallery/static/js/main.5556e935.chunk.js.map",
+    "main.js": "/moviegallery/static/js/main.24b5f134.chunk.js",
+    "main.js.map": "/moviegallery/static/js/main.24b5f134.chunk.js.map",
     "runtime-main.js": "/moviegallery/static/js/runtime-main.bf56ae49.js",
     "runtime-main.js.map": "/moviegallery/static/js/runtime-main.bf56ae49.js.map",
     "static/js/2.ad4cc19e.chunk.js": "/moviegallery/static/js/2.ad4cc19e.chunk.js",
     "static/js/2.ad4cc19e.chunk.js.map": "/moviegallery/static/js/2.ad4cc19e.chunk.js.map",
     "index.html": "/moviegallery/index.html",
-    "precache-manifest.7d0bf2d3f0c8f5525216830cd9e43b07.js": "/moviegallery/precache-manifest.7d0bf2d3f0c8f5525216830cd9e43b07.js",
+    "precache-manifest.2915f34220687915ac67ffffe1f5ffe7.js": "/moviegallery/precache-manifest.2915f34220687915ac67ffffe1f5ffe7.js",
     "service-worker.js": "/moviegallery/service-worker.js",
     "static/css/main.b4264841.chunk.css.map": "/moviegallery/static/css/main.b4264841.chunk.css.map",
     "static/js/2.ad4cc19e.chunk.js.LICENSE": "/moviegallery/static/js/2.ad4cc19e.chunk.js.LICENSE",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.bf56ae49.js",
     "static/js/2.ad4cc19e.chunk.js",
     "static/css/main.b4264841.chunk.css",
-    "static/js/main.5556e935.chunk.js"
+    "static/js/main.24b5f134.chunk.js"
   ]
 }
