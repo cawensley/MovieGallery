@@ -1,16 +1,14 @@
 import React from 'react';
-import './footer.css';
 
 const Footer = () => {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
 
   return (
-    <div className="text-white text-center bg-dark py-2 o-footer-height o-footer-bottom">
-      <small>
+    <div className="bg-dark fixed-bottom text-center text-white">
 Copyright &copy; Movie Gallery Website
-        {currentYear.toString()}
-      </small>
+      {' '}
+      {currentYear.toString()}
     </div>
   );
 };

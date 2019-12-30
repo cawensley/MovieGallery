@@ -1,18 +1,10 @@
 @import "../styles/index.scss";
 
 .m-card-width {
-        width: 47%;}
+        width: 18rem;}
 .m-cardimg-height {
-        height: auto;
-        min-height: 18.5rem;}
-
-@media (min-width: 576px) {
-    .m-card-width {
-        width: 16rem;}
-    .m-cardimg-height {
         height: 24rem;
         min-height: 24rem;}
-}
 
 .m-card-hover:hover {
     cursor: pointer;

@@ -85,7 +85,7 @@ const Home = () => {
       <PageTitle Title="Search Movies" />
       <input
         type="text"
-        size="15"
+        placeholder="Enter a movie title"
         className="h6"
         onChange={(event) => { userInput.current = event.target.value; }}
         onKeyPress={(event) => { if (event.key === 'Enter') { store.dispatch(PageChange(1)); getmovieData(); } }}
@@ -93,7 +93,7 @@ const Home = () => {
       <button
         type="submit"
         value="Submit"
-        className="btn btn-primary btn-sm"
+        className="btn btn-primary btn-sm ml-2"
         onClick={() => { store.dispatch(PageChange(1)); getmovieData(); }}
       >
 Title Search
@@ -120,7 +120,7 @@ No Searches Matching:
           <button
             type="submit"
             value="Submit"
-            className="btn btn-primary btn-sm"
+            className="btn btn-primary btn-sm ml-2"
             onClick={() => { store.dispatch(PageChange(1)); getmovieData(); }}
           >
 Title Search
