@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import Cardlist from '../molecules/cardlist';
 import movieAPI from '../atoms/movieAPI';
 import PageTitle from '../atoms/pageTitle';
-import ShowResults from '../atoms/ShowResults';
 import PageLoading from '../atoms/pageLoading';
 import PageChange from '../Redux/actions/PageChange';
 import ResultsChange from '../Redux/actions/ResultsChange';
@@ -21,6 +20,7 @@ const Home = () => {
   const filterTerm = useRef('');
   const TypeFilterArray = ['movie', 'series', 'game'];
   const filterType = useRef('');
+  const UniqueRemovals = useRef(0);
 
   async function getmovieData() {
     setisLoading(true);
@@ -53,15 +53,18 @@ const Home = () => {
     });
     await Promise.all(moviepromises);
 
-    const uniqueMoviesArray = Array.from(
-      new Set(TotalMoviestoDisplay.map((unique) => unique.imdbID)),
-    )
-      .map((imdbID) => TotalMoviestoDisplay.find((movie) => movie.imdbID === imdbID));
+    const UniqueMovieIDs = {};
+    const UniqueMoviesArray = TotalMoviestoDisplay.filter((movie) => {
+      if (UniqueMovieIDs[movie.imdbID]) return false;
+      UniqueMovieIDs[movie.imdbID] = true;
+      return true;
+    });
+    UniqueRemovals.current = TotalMoviestoDisplay.length - UniqueMoviesArray.length;
 
     filterTerm.current = '';
     filterType.current = '';
-    setmoviestoDisplay(uniqueMoviesArray);
-    setfilteredMovies(uniqueMoviesArray);
+    setmoviestoDisplay(UniqueMoviesArray);
+    setfilteredMovies(UniqueMoviesArray);
     setisLoading(false);
   }
 
@@ -155,10 +158,12 @@ Filter Type By:
         <div className="col-xl-3 col-md-6 text-md-left">
           <p className="text-warning">
 Total Search Results:
+            {' '}
             {TotalResults}
           </p>
           <p className="text-warning">
 Total Pages:
+            {' '}
             {PageArray.length}
           </p>
           <label htmlFor="ResultsperPage" className="text-warning">
@@ -197,11 +202,11 @@ Searches Matching: &quot;
             {store.getState().search}
               &quot;
           </p>
-          <ShowResults
-            Page={+store.getState().page}
-            Results={+store.getState().results}
-            Total={+TotalResults}
-          />
+          <p className="text-warning">
+                Duplicate Results Removed:
+            {' '}
+            {UniqueRemovals.current}
+          </p>
         </div>
         <div className="col-xl-3" />
       </div>
