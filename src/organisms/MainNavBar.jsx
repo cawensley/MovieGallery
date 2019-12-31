@@ -12,6 +12,7 @@ const MainNavBar = () => {
     store.dispatch(PageChange(1));
     store.dispatch(SearchChange(userInput.current));
     window.location.hash = '/';
+    window.location.reload();
   }
 
   return (
