@@ -6,12 +6,12 @@ import PageChange from '../Redux/actions/PageChange';
 import SearchChange from '../Redux/actions/SearchChange';
 
 const MainNavBar = () => {
-  const userInput = useRef(null);
+  const userInput = useRef(store.getState().search || 'Star Wars');
 
   function newSearch() {
     store.dispatch(PageChange(1));
     store.dispatch(SearchChange(userInput.current));
-    window.location.href = '/';
+    window.location.hash = '/';
   }
 
   return (
