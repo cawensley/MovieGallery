@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Cardlist from '../molecules/cardlist';
 import movieAPI from '../atoms/movieAPI';
-import PageTitle from '../atoms/pageTitle';
 import PageLoading from '../atoms/pageLoading';
 import PageChange from '../Redux/actions/PageChange';
 import ResultsChange from '../Redux/actions/ResultsChange';
-import SearchChange from '../Redux/actions/SearchChange';
 import store from '../Redux/store';
 
 const Home = () => {
@@ -15,7 +13,7 @@ const Home = () => {
   const [TotalResults, setTotalResults] = useState();
   const [FetchSuccess, setFetchSuccess] = useState(false);
   const [isLoading, setisLoading] = useState(false);
-  const userInput = useRef(store.getState().search);
+  const SearchTerm = useRef(store.getState().search || 'Star Wars');
   const [filteredMovies, setfilteredMovies] = useState([]);
   const filterTerm = useRef('');
   const TypeFilterArray = ['movie', 'series', 'game'];
@@ -24,8 +22,7 @@ const Home = () => {
 
   async function getmovieData() {
     setisLoading(true);
-    store.dispatch(SearchChange(userInput.current));
-    const rawData = await fetch(`https://www.omdbapi.com/?s=${userInput.current}&apikey=${movieAPI}`)
+    const rawData = await fetch(`https://www.omdbapi.com/?s=${SearchTerm.current}&apikey=${movieAPI}`)
       .then((response) => response.json());
     setTotalResults(rawData.totalResults);
 
@@ -46,7 +43,7 @@ const Home = () => {
 
     const TotalMoviestoDisplay = [];
     const moviepromises = PagestoFetch.map((value) => {
-      const moviebatch = fetch(`https://www.omdbapi.com/?s=${userInput.current}&page=${value}&apikey=${movieAPI}`)
+      const moviebatch = fetch(`https://www.omdbapi.com/?s=${SearchTerm.current}&page=${value}&apikey=${movieAPI}`)
         .then((response) => response.json())
         .then((data) => data.Search.map((singlemovie) => TotalMoviestoDisplay.push(singlemovie)));
       return (moviebatch);
@@ -69,7 +66,7 @@ const Home = () => {
   }
 
   // eslint-disable-next-line
-    useEffect (()=> {if (store.getState().search!==null) {getmovieData()} window.scrollTo(0,0)},[]);
+    useEffect (()=> {getmovieData(); window.scrollTo(0,0)},[]);
 
   function onFilterChange() {
     const FilteredMovieArray1 = moviestoDisplay.filter(
@@ -85,49 +82,14 @@ const Home = () => {
 
   return (!moviestoDisplay || !FetchSuccess) ? (
     <div className="container-fluid p-padding text-center">
-      <PageTitle Title="Search Movies" />
-      <input
-        type="text"
-        placeholder="Enter a movie title"
-        className="h6"
-        onChange={(event) => { userInput.current = event.target.value; }}
-        onKeyPress={(event) => { if (event.key === 'Enter') { store.dispatch(PageChange(1)); getmovieData(); } }}
-      />
-      <button
-        type="submit"
-        value="Submit"
-        className="btn btn-primary btn-sm ml-2"
-        onClick={() => { store.dispatch(PageChange(1)); getmovieData(); }}
-      >
-Title Search
-      </button>
-      <br />
-      <h2 className="text-warning">
-No Searches Matching:
-        {store.getState().search}
-      </h2>
+      <div className="h3 text-white pb-2">{`No results returned for "${SearchTerm.current}"`}</div>
     </div>
   ) : (
     <div className="container-fluid p-padding text-center">
       <div className="row">
         <div className="col-xl-3" />
         <div className="col-xl-3 col-md-6">
-          <PageTitle Title="Search Movies" />
-          <input
-            type="text"
-            placeholder="Enter a movie title"
-            className="h6"
-            onChange={(event) => { userInput.current = event.target.value; }}
-            onKeyPress={(event) => { if (event.key === 'Enter') { store.dispatch(PageChange(1)); getmovieData(); } }}
-          />
-          <button
-            type="submit"
-            value="Submit"
-            className="btn btn-primary btn-sm ml-2"
-            onClick={() => { store.dispatch(PageChange(1)); getmovieData(); }}
-          >
-Title Search
-          </button>
+          <div className="h3 text-white pb-2">{`${TotalResults} results for "${SearchTerm.current}"`}</div>
           <h6 className="text-white mt-2">Filter Title By:</h6>
           <input
             type="search"
@@ -156,11 +118,6 @@ Filter Type By:
           </label>
         </div>
         <div className="col-xl-3 col-md-6 text-md-left">
-          <p className="text-warning">
-Total Search Results:
-            {' '}
-            {TotalResults}
-          </p>
           <p className="text-warning">
 Total Pages:
             {' '}
@@ -197,11 +154,6 @@ Page:
               {PageArray.map((item) => (<option key={item} value={item}>{item}</option>))}
             </select>
           </label>
-          <p className="text-warning">
-Searches Matching: &quot;
-            {store.getState().search}
-              &quot;
-          </p>
           <p className="text-warning">
                 Duplicate Results Removed:
             {' '}
