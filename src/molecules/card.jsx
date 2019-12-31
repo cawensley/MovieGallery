@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './card.scss';
 import { Link } from 'react-router-dom';
-import MovieChange from '../Redux/actions/MovieChange';
 import AddRemoveButton from './AddRemoveButton';
-import store from '../Redux/store';
 
 const Card = ({
   Title, Year, imdbID, Type, Poster,
@@ -14,7 +12,7 @@ const Card = ({
 
   return (
     <div className="card d-inline-flex m-card-width m-card-hover m-1 bg-dark">
-      <Link to="/details" onClick={() => store.dispatch(MovieChange(`${imdbID}`))}>
+      <Link to={`/details/${imdbID}`}>
         <img className="m-cardimg-height w-100" alt="Error Loading" src={DisplayPoster} />
         <div className="card-body">
           <h5 className="card-title text-warning">{Title}</h5>

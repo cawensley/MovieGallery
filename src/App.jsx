@@ -13,7 +13,7 @@ const App = () => (
     <Particles className="p-particles" params={particleOptions} />
     <MainNavBar />
     <Switch>
-      <Route path="/details" component={Details} />
+      <Route path="/details/:imdbID" component={Details} />
       <Route path="/favorites" component={Favorites} />
       <Route path="/" component={Home} />
     </Switch>

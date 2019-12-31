@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import movieAPI from '../atoms/movieAPI';
 import PageTitle from '../atoms/pageTitle';
 import './details.scss';
 import PageLoading from '../atoms/pageLoading';
 import AddRemoveButton from '../molecules/AddRemoveButton';
-import store from '../Redux/store';
 
-const Details = () => {
-  const movieIDtoDisplay = store.getState().movie;
+const Details = ({ match }) => {
+  const movieIDtoDisplay = match.params.imdbID;
   const [movietoDisplay, setmovietoDisplay] = useState(null);
   const [isLoading, setisLoading] = useState(false);
   const [PosterImage, setPosterImage] = useState(require('../images/imageBlank.jpg'));
@@ -102,6 +102,21 @@ const Details = () => {
       </div>
     </div>
   );
+};
+
+Details.propTypes = {
+  match: PropTypes.shape({
+    path: PropTypes.string,
+    url: PropTypes.string,
+    isExact: PropTypes.bool,
+    params: PropTypes.shape({
+      imdbID: PropTypes.string,
+    }),
+  }),
+};
+
+Details.defaultProps = {
+  match: null,
 };
 
 export default Details;
