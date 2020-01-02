@@ -46,7 +46,7 @@ const MainNavBar = () => {
       <button
         type="submit"
         value="Submit"
-        className="btn btn-primary btn-sm ml-2"
+        className="btn btn-primary btn-sm mx-md-3 mx-1"
         onClick={() => newSearch()}
       >
             Title Search

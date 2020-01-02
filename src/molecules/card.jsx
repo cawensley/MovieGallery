@@ -18,10 +18,12 @@ const Card = ({
           <h5 className="card-title text-warning">{Title}</h5>
           <p className="card-text text-light">
 Year:
+            {' '}
             {Year}
           </p>
           <p className="card-text text-light">
 Type:
+            {' '}
             {Type}
           </p>
         </div>
