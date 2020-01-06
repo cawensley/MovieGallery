@@ -1,0 +1,6 @@
+@import "../styles/index.scss";
+
+.nav-link {color: $white;
+  &:hover {color: $primary}
+  &:focus {color: $warning}
+}

@@ -1,0 +1,23 @@
+@import "../styles/index.scss";
+
+.m-card-width {
+        width: 18rem;}
+.m-cardimg-height {
+        height: 24rem;
+        min-height: 24rem;}
+
+.m-card-hover:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    z-index: 1;
+    transition: transform .4s ease-in-out;
+    border-color: red;
+}
+
+.m-cardhyperLink-color {
+    color: #00b9ff;
+    background-color: transparent;
+    text-decoration-line: underline;
+    font-style: italic;
+    &:hover {color: $primary;}
+}

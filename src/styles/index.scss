@@ -1,0 +1,32 @@
+$primary: grey !default;
+$secondary: rgba(3, 6, 58, 0.41) !default;
+$dark: #000000 !default;
+$font-family-sans-serif: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", 'Noto Color Emoji' !default;
+$headings-font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", 'Noto Color Emoji' !default;
+$headings-font-weight: 700 !default;
+
+@import "bootstrap/scss/bootstrap.scss";
+
+html {padding: env(safe-area-inset);}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: repeating-linear-gradient(to left, rgba(7,27,82,1) 0%, rgba(0,128,128,1) 100%);
+  background-color: rgba(7,27,82,1);
+}
+
+.p-particles {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.p-padding {
+  padding-top: 5rem;
+  padding-bottom: 3rem;
+  min-height: 100vh;
+}

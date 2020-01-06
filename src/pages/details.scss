@@ -1,0 +1,17 @@
+@import "../styles/index.scss";
+
+.p-movieimage-height {
+    min-height: 400px;
+}
+
+.p-movieimage-width {
+    min-width: 265px;
+}
+
+.p-hyperLink-color {
+    color: #00b9ff;
+    background-color: transparent;
+    text-decoration-line: underline;
+    font-style: italic;
+    &:hover {color: $primary;}
+}
